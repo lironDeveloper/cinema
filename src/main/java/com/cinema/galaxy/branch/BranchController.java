@@ -1,7 +1,5 @@
 package com.cinema.galaxy.branch;
 
-import com.cinema.galaxy.user.User;
-import com.cinema.galaxy.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,5 @@
 package com.cinema.galaxy.branch;
 
-import com.cinema.galaxy.user.User;
-import com.cinema.galaxy.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

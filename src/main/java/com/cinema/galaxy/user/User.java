@@ -1,6 +1,6 @@
 package com.cinema.galaxy.user;
 
-
+import com.cinema.galaxy.enums.Role;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,9 +13,9 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private Role role;
 
-    public User(String username, String password, UserRole role) {
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -36,7 +36,7 @@ public class User {
         return password;
     }
 
-    public UserRole getRole() {
+    public Role getRole() {
         return role;
     }
 
@@ -52,7 +52,7 @@ public class User {
         this.password = password;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

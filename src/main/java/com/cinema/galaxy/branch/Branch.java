@@ -1,6 +1,5 @@
 package com.cinema.galaxy.branch;
 
-import com.cinema.galaxy.user.UserRole;
 import jakarta.persistence.*;
 
 @Table
