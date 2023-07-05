@@ -1,6 +1,8 @@
 package com.cinema.galaxy.branch;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Table
 @Entity
@@ -8,11 +10,16 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "חובה להכניס שם ביצירת סניף.")
+    @Size(min = 2, max = 50, message = "שם סניף חייב להיות באורך של 2-50 תווים.")
     private String name;
+    @NotBlank(message = "חובה להכניס עיר ביצירת סניף.")
+    @Size(min = 2, max = 50, message = "שם עיר חייב להיות באורך של 2-50 תווים.")
     private String city;
 
+    @NotBlank(message = "חובה להכניס כתובת ביצירת סניף.")
+    @Size(min = 2, max = 150, message = "כתובת חייבת להיות באורך של 2-150 תווים.")
     private String address;
-
     private String contact_info;
 
     public Branch(String name, String city, String address, String contact_info) {

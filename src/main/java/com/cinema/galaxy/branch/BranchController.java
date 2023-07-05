@@ -1,14 +1,18 @@
 package com.cinema.galaxy.branch;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/branches")
+@RequestMapping(path = "/api/branch")
 public class BranchController {
 
     private final BranchService branchService;
@@ -23,4 +27,36 @@ public class BranchController {
         return branchService.getBranches();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Branch> getBranchById(@PathVariable("id") Long id) {
+        Branch branch = branchService.getBranchById(id);
+
+        if(branch != null) {
+            return ResponseEntity.ok(branch);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Branch> createBranch(@Valid @RequestBody Branch branch, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            StringBuilder message = new StringBuilder();
+            for(ObjectError error :bindingResult.getAllErrors()){
+                message.append(error.getDefaultMessage()).append(" ");
+            }
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message.toString().trim());
+        }
+        Branch createdBranch = branchService.createBranch(branch);
+        return new ResponseEntity<>(createdBranch, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBranch(@PathVariable Long id) {
+        if (branchService.deleteBranch(id)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
