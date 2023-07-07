@@ -2,6 +2,9 @@ package com.cinema.galaxy.seat;
 
 import com.cinema.galaxy.hall.Hall;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Table
 @Entity
@@ -10,8 +13,14 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @NotBlank(message = "מזהה אולם נדרש.")
+    @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
     private Hall hall_id;
+    @NotBlank(message = "שורה של מושב נדרשת.")
+    @Min(value = 1, message = "מספר שורה של מושב חייב להיות גדול מ0.")
     private int row_num;
+    @NotBlank(message = "עמודה של מושב נדרשת.")
+    @Min(value = 1, message = "מספר עמודה של מושב חייב להיות גדול מ0.")
     private int col_num;
 
     public Seat(Hall hall_id, int row_num, int col_num) {

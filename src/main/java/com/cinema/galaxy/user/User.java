@@ -2,6 +2,8 @@ package com.cinema.galaxy.user;
 
 import com.cinema.galaxy.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table
@@ -9,10 +11,17 @@ public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "שם משתמש נדרש.")
+    @Size(min = 5, max = 50, message = "שם משתמש חייב להיות באורך של 5 עד 50 תווים.")
     private String username;
+
+    @NotBlank(message = "סיסמא נדרשת.")
+    @Size(min = 8, max = 16, message = "סיסמא חייבת להיות באורך של 8 עד 16 תווים.")
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @NotBlank(message = "שם התפקיד נדרש.")
+    // TODO: Validation for enum
     private Role role;
 
     public User(String username, String password, Role role) {

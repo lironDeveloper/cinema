@@ -3,6 +3,10 @@ package com.cinema.galaxy.showtime;
 import com.cinema.galaxy.hall.Hall;
 import com.cinema.galaxy.movie.Movie;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -13,10 +17,18 @@ public class Showtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @NotBlank(message = "מזהה סרט נדרש.")
+    @Size(min = 1, max = 255, message = "מזהה סרט חייב להיות באורך של 1 עד 255 תווים.")
     private Movie movie_id;
     @ManyToOne
+    @NotBlank(message = "מזהה אולם נדרש.")
+    @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
     private Hall hall_id;
+    @NotBlank(message = "תאריך תחילת ההקרנה נדרש.")
+    @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
     private Date start_time;
+    @NotBlank(message = "תאריך סיום ההקרנה נדרש.")
+    @Future(message = "תאריך סיום הקרנה חייב להיות בעתיד.")
     private Date end_time;
 
     public Showtime(Movie movie_id, Hall hall_id, Date start_time, Date end_time) {

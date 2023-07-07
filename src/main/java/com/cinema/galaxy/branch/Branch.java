@@ -10,16 +10,19 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "חובה להכניס שם ביצירת סניף.")
+    @NotBlank(message = "שם סניף נדרש.")
     @Size(min = 2, max = 50, message = "שם סניף חייב להיות באורך של 2-50 תווים.")
     private String name;
-    @NotBlank(message = "חובה להכניס עיר ביצירת סניף.")
+    @NotBlank(message = "שם עיר של סניף נדרש.")
     @Size(min = 2, max = 50, message = "שם עיר חייב להיות באורך של 2-50 תווים.")
     private String city;
 
-    @NotBlank(message = "חובה להכניס כתובת ביצירת סניף.")
+    @NotBlank(message = "כתובת סניף נדרשת.")
     @Size(min = 2, max = 150, message = "כתובת חייבת להיות באורך של 2-150 תווים.")
     private String address;
+
+    @NotBlank(message = "איש קשר של הסניף נדרש.")
+    @Size(min = 2, max = 50, message = "שם איש קשר חייב להיות באורך של 2-50 תווים.")
     private String contact_info;
 
     public Branch(String name, String city, String address, String contact_info) {

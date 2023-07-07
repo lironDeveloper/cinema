@@ -4,6 +4,9 @@ import com.cinema.galaxy.enums.MovieRating;
 import com.cinema.galaxy.movie.Movie;
 import com.cinema.galaxy.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 @Table
 @Entity
@@ -12,12 +15,20 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @NotBlank(message = "מזהה משתמש נדרש.")
+    @Size(min = 1, max = 255, message = "מזהה משתמש חייב להיות באורך של 1 עד 255 תווים.")
     private User user_id;
     @ManyToOne
+    @NotBlank(message = "מזהה סרט נדרש.")
+    @Size(min = 1, max = 255, message = "מזהה סרט חייב להיות באורך של 1 עד 255 תווים.")
     private Movie movie_id;
     @Enumerated(EnumType.STRING)
+    @NotBlank(message = "דירוג הביקורת נדרש.")
+    // TODO: Validation for enum
     private MovieRating rating;
 
+    @NotBlank(message = "תגובה לביקורת נדרשת.")
+    @Size(min = 5, max = 255, message = "תגובה לביקורת חייבת להיות באורך של 5 עד 255 תווים.")
     private String comment;
 
     public Review() {

@@ -3,6 +3,10 @@ package com.cinema.galaxy.movie;
 import com.cinema.galaxy.enums.Genre;
 import com.cinema.galaxy.enums.Language;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 import java.util.Date;
 
@@ -12,15 +16,35 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "שם סרט נדרש.")
+    @Size(min = 2, max = 100, message = "שם סרט חייב להיות באורך של 2-100 תווים.")
     private String title;
+    @NotBlank(message = "תיאור של סרט נדרש.")
+    @Size(min = 2, max = 254, message = "תיאור סרט חייב להיות באורך של 2-254 תווים.")
     private String description;
+
+    @NotBlank(message = "אורך סרט נדרש.")
+    @Range(min = 1, max=300, message = "אורך סרט חייב להיות בין דקה ל5 שעות.")
     private int duration; // In minutes
+
+    @NotBlank(message = "תאריך הוצאה של סרט נדרש.")
+    @PastOrPresent(message = "תאריך הוצאת סרט חייב להיות בעבר.")
     private Date release_date;
     @Enumerated(EnumType.STRING)
+    @NotBlank(message = "ז'אנר של סרט נדרש.")
+    // TODO: Validation for enum
     private Genre genre;
+
+    @NotBlank(message = "שם במאי של הסרט נדרש.")
+    @Size(min = 2, max = 100, message = "שם במאי של הסרט חייב להיות באורך של 2-100 תווים.")
     private String director;
     @Enumerated(EnumType.STRING)
+    @NotBlank(message = "שפת הסרט נדרשת.")
+    // TODO: Validation for enum
     private Language language;
+
+    @NotBlank(message = "גיל מינימאלי נדרש.")
+    @Range(min = 0, max=18, message = "גיל מינימאלי חייב להיות בין 0 ל18.")
     private int min_age;
 
     public Movie() {
