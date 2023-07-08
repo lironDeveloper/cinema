@@ -1,5 +1,6 @@
 package com.cinema.galaxy.services;
 
+import com.cinema.galaxy.models.Branch;
 import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,4 +21,9 @@ public class UserService {
     public List<User> getUsers(){
         return userRepository.findAll();
     }
+
+    public User createUser(User user){
+        return userRepository.save(user);
+    }
+
 }

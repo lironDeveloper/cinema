@@ -3,6 +3,7 @@ package com.cinema.galaxy.models;
 import com.cinema.galaxy.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -20,7 +21,7 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @NotBlank(message = "שם התפקיד נדרש.")
+    @NotNull
     // TODO: Validation for enum
     private Role role;
 

@@ -41,14 +41,7 @@ public class BranchController {
     }
 
     @PostMapping
-    public ResponseEntity<Branch> createBranch(@Valid @RequestBody Branch branch, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()){
-            StringBuilder message = new StringBuilder();
-            for(ObjectError error :bindingResult.getAllErrors()){
-                message.append(error.getDefaultMessage()).append(" ");
-            }
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message.toString().trim());
-        }
+    public ResponseEntity<Branch> createBranch(@Valid @RequestBody Branch branch) {
         Branch createdBranch = branchService.createBranch(branch);
         return new ResponseEntity<>(createdBranch, HttpStatus.CREATED);
     }
