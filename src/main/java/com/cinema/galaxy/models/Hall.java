@@ -3,6 +3,7 @@ package com.cinema.galaxy.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Table
@@ -11,23 +12,21 @@ public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "מזהה סניף נדרש..")
+    @NotBlank(message = "מזהה סניף נדרש.")
     @ManyToOne
-    private Branch branch_id;
-
+    private Branch branchId;
     @NotBlank(message = "שם האולם נדרש.")
     @Size(min = 2, max = 50, message = "שם אולם חייב להיות באורך של 2-50 תווים.")
     private String name;
-
-    @NotBlank(message = "כמות מקסימלית של אנשים באולם נדרשת.")
+    @NotNull
     @Min(value = 1, message = "נדרש לפחות מושב אחד באולם.")
-    private int capacity;
+    private Integer capacity;
 
     public Hall() {
     }
 
-    public Hall(Branch branch_id, String name, int capacity) {
-        this.branch_id = branch_id;
+    public Hall(Branch branchId, String name, int capacity) {
+        this.branchId = branchId;
         this.name = name;
         this.capacity = capacity;
     }
@@ -40,12 +39,12 @@ public class Hall {
         this.id = id;
     }
 
-    public Branch getBranch_id() {
-        return branch_id;
+    public Branch getBranchId() {
+        return branchId;
     }
 
-    public void setBranch_id(Branch branch_id) {
-        this.branch_id = branch_id;
+    public void setBranchId(Branch branchId) {
+        this.branchId = branchId;
     }
 
     public String getName() {
@@ -68,7 +67,7 @@ public class Hall {
     public String toString() {
         return "Hall{" +
                 "id=" + id +
-                ", branch_id=" + branch_id +
+                ", branchId=" + branchId +
                 ", name='" + name + '\'' +
                 ", capacity='" + capacity + '\'' +
                 '}';

@@ -16,20 +16,18 @@ public class Branch {
     @NotBlank(message = "שם עיר של סניף נדרש.")
     @Size(min = 2, max = 50, message = "שם עיר חייב להיות באורך של 2-50 תווים.")
     private String city;
-
     @NotBlank(message = "כתובת סניף נדרשת.")
     @Size(min = 2, max = 150, message = "כתובת חייבת להיות באורך של 2-150 תווים.")
     private String address;
-
     @NotBlank(message = "איש קשר של הסניף נדרש.")
     @Size(min = 2, max = 50, message = "שם איש קשר חייב להיות באורך של 2-50 תווים.")
-    private String contact_info;
+    private String contactInfo;
 
-    public Branch(String name, String city, String address, String contact_info) {
+    public Branch(String name, String city, String address, String contactInfo) {
         this.name = name;
         this.city = city;
         this.address = address;
-        this.contact_info = contact_info;
+        this.contactInfo = contactInfo;
     }
 
     public Branch() {
@@ -67,12 +65,12 @@ public class Branch {
         this.address = address;
     }
 
-    public String getContact_info() {
-        return contact_info;
+    public String getContactInfo() {
+        return contactInfo;
     }
 
-    public void setContact_info(String contact_info) {
-        this.contact_info = contact_info;
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
     }
 
     @Override
@@ -82,7 +80,7 @@ public class Branch {
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 ", address='" + address + '\'' +
-                ", contact_info='" + contact_info + '\'' +
+                ", contactInfo='" + contactInfo + '\'' +
                 '}';
     }
 }

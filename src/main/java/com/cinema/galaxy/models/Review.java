@@ -1,9 +1,10 @@
 package com.cinema.galaxy.models;
 
-import com.cinema.galaxy.enums.MovieRating;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.Range;
 
 @Table
 @Entity
@@ -11,19 +12,15 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @NotBlank(message = "מזהה משתמש נדרש.")
-    @Size(min = 1, max = 255, message = "מזהה משתמש חייב להיות באורך של 1 עד 255 תווים.")
-    private User user_id;
-    @ManyToOne
-    @NotBlank(message = "מזהה סרט נדרש.")
-    @Size(min = 1, max = 255, message = "מזהה סרט חייב להיות באורך של 1 עד 255 תווים.")
-    private Movie movie_id;
-    @Enumerated(EnumType.STRING)
-    @NotBlank(message = "דירוג הביקורת נדרש.")
-    // TODO: Validation for enum
-    private MovieRating rating;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id", nullable = false)
+    private Movie movieId;
+    @NotNull
+    @Range(min = 1, max = 5, message = "דירוג הביקורת הוא מספר בין 1 ל5.")
+    private Integer rating;
     @NotBlank(message = "תגובה לביקורת נדרשת.")
     @Size(min = 5, max = 255, message = "תגובה לביקורת חייבת להיות באורך של 5 עד 255 תווים.")
     private String comment;
@@ -31,9 +28,9 @@ public class Review {
     public Review() {
     }
 
-    public Review(User user_id, Movie movie_id, MovieRating rating, String comment) {
-        this.user_id = user_id;
-        this.movie_id = movie_id;
+    public Review(User userId, Movie movieId, int rating, String comment) {
+        this.userId = userId;
+        this.movieId = movieId;
         this.rating = rating;
         this.comment = comment;
     }
@@ -46,27 +43,27 @@ public class Review {
         this.id = id;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public Movie getMovie_id() {
-        return movie_id;
+    public Movie getMovieId() {
+        return movieId;
     }
 
-    public void setMovie_id(Movie movie_id) {
-        this.movie_id = movie_id;
+    public void setMovieId(Movie movieId) {
+        this.movieId = movieId;
     }
 
-    public MovieRating getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(MovieRating rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
@@ -82,8 +79,8 @@ public class Review {
     public String toString() {
         return "Review{" +
                 "id=" + id +
-                ", user_id=" + user_id +
-                ", movie_id=" + movie_id +
+                ", userId=" + userId +
+                ", movieId=" + movieId +
                 ", rating=" + rating +
                 ", comment='" + comment + '\'' +
                 '}';

@@ -31,7 +31,7 @@ public class BranchService {
         return branchRepository.save(branch);
     }
 
-    public boolean deleteBranch(@PathVariable Long id) {
+    public boolean deleteBranch(Long id) {
         if (branchRepository.existsById(id)) {
             branchRepository.deleteById(id);
             return true;

@@ -1,13 +1,12 @@
 package com.cinema.galaxy.models;
 
-import com.cinema.galaxy.models.Hall;
-import com.cinema.galaxy.models.Movie;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Table
 @Entity
@@ -18,23 +17,23 @@ public class Showtime {
     @ManyToOne
     @NotBlank(message = "מזהה סרט נדרש.")
     @Size(min = 1, max = 255, message = "מזהה סרט חייב להיות באורך של 1 עד 255 תווים.")
-    private Movie movie_id;
+    private Movie movieId;
     @ManyToOne
     @NotBlank(message = "מזהה אולם נדרש.")
     @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
-    private Hall hall_id;
-    @NotBlank(message = "תאריך תחילת ההקרנה נדרש.")
+    private Hall hallId;
+    @NotNull
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
-    private Date start_time;
-    @NotBlank(message = "תאריך סיום ההקרנה נדרש.")
+    private LocalDateTime startTime;
+    @NotNull
     @Future(message = "תאריך סיום הקרנה חייב להיות בעתיד.")
-    private Date end_time;
+    private LocalDateTime endTime;
 
-    public Showtime(Movie movie_id, Hall hall_id, Date start_time, Date end_time) {
-        this.movie_id = movie_id;
-        this.hall_id = hall_id;
-        this.start_time = start_time;
-        this.end_time = end_time;
+    public Showtime(Movie movieId, Hall hallId, LocalDateTime startTime, LocalDateTime endTime) {
+        this.movieId = movieId;
+        this.hallId = hallId;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Showtime() {
@@ -48,46 +47,46 @@ public class Showtime {
         this.id = id;
     }
 
-    public Movie getMovie_id() {
-        return movie_id;
+    public Movie getMovieId() {
+        return movieId;
     }
 
-    public void setMovie_id(Movie movie_id) {
-        this.movie_id = movie_id;
+    public void setMovieId(Movie movieId) {
+        this.movieId = movieId;
     }
 
-    public Hall getHall_id() {
-        return hall_id;
+    public Hall getHallId() {
+        return hallId;
     }
 
-    public void setHall_id(Hall hall_id) {
-        this.hall_id = hall_id;
+    public void setHallId(Hall hallId) {
+        this.hallId = hallId;
     }
 
-    public Date getStart_time() {
-        return start_time;
+    public LocalDateTime getStartTime() {
+        return startTime;
     }
 
-    public void setStart_time(Date start_time) {
-        this.start_time = start_time;
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getEnd_time() {
-        return end_time;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setEnd_time(Date end_time) {
-        this.end_time = end_time;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     @Override
     public String toString() {
         return "Showtime{" +
                 "id=" + id +
-                ", movie_id=" + movie_id +
-                ", hall_id=" + hall_id +
-                ", start_time=" + start_time +
-                ", end_time=" + end_time +
+                ", movieId=" + movieId +
+                ", hallId=" + hallId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
                 '}';
     }
 }

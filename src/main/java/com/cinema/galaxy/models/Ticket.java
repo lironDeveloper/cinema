@@ -10,27 +10,26 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @NotBlank(message = "מזהה משתמש נדרש.")
     @Size(min = 1, max = 255, message = "מזהה משתמש חייב להיות באורך של 1 עד 255 תווים.")
-    private User user_id;
+    private User userId;
     @ManyToOne
     @NotBlank(message = "מזהה הקרנה נדרש.")
     @Size(min = 1, max = 255, message = "מזהה הקרנה חייב להיות באורך של 1 עד 255 תווים.")
-    private Showtime showtime_id;
+    private Showtime showtimeId;
     @ManyToOne
     @NotBlank(message = "מזהה מושב נדרש.")
     @Size(min = 1, max = 255, message = "מזהה מושב חייב להיות באורך של 1 עד 255 תווים.")
-    private Seat seat_id;
+    private Seat seatId;
 
     public Ticket() {
     }
 
-    public Ticket(User user_id, Showtime showtime_id, Seat seat_id) {
-        this.user_id = user_id;
-        this.showtime_id = showtime_id;
-        this.seat_id = seat_id;
+    public Ticket(User userId, Showtime showtimeId, Seat seatId) {
+        this.userId = userId;
+        this.showtimeId = showtimeId;
+        this.seatId = seatId;
     }
 
     public Long getId() {
@@ -41,37 +40,37 @@ public class Ticket {
         this.id = id;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public Showtime getShowtime_id() {
-        return showtime_id;
+    public Showtime getShowtimeId() {
+        return showtimeId;
     }
 
-    public void setShowtime_id(Showtime showtime_id) {
-        this.showtime_id = showtime_id;
+    public void setShowtimeId(Showtime showtimeId) {
+        this.showtimeId = showtimeId;
     }
 
-    public Seat getSeat_id() {
-        return seat_id;
+    public Seat getSeatId() {
+        return seatId;
     }
 
-    public void setSeat_id(Seat seat_id) {
-        this.seat_id = seat_id;
+    public void setSeatId(Seat seatId) {
+        this.seatId = seatId;
     }
 
     @Override
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", user_id=" + user_id +
-                ", showtime_id=" + showtime_id +
-                ", seat_id=" + seat_id +
+                ", userId=" + userId +
+                ", showtimeId=" + showtimeId +
+                ", seatId=" + seatId +
                 '}';
     }
 }

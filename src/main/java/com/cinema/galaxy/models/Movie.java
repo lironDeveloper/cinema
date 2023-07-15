@@ -2,13 +2,15 @@ package com.cinema.galaxy.models;
 
 import com.cinema.galaxy.enums.Genre;
 import com.cinema.galaxy.enums.Language;
+import com.cinema.galaxy.validators.ValidEnumValue;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.Range;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Table
 @Entity
@@ -22,43 +24,35 @@ public class Movie {
     @NotBlank(message = "תיאור של סרט נדרש.")
     @Size(min = 2, max = 254, message = "תיאור סרט חייב להיות באורך של 2-254 תווים.")
     private String description;
-
-    @NotBlank(message = "אורך סרט נדרש.")
     @Range(min = 1, max=300, message = "אורך סרט חייב להיות בין דקה ל5 שעות.")
-    private int duration; // In minutes
-
-    @NotBlank(message = "תאריך הוצאה של סרט נדרש.")
+    @NotNull
+    private Integer duration; // In minutes
+    @NotNull
     @PastOrPresent(message = "תאריך הוצאת סרט חייב להיות בעבר.")
-    private Date release_date;
-    @Enumerated(EnumType.STRING)
-    @NotBlank(message = "ז'אנר של סרט נדרש.")
-    // TODO: Validation for enum
-    private Genre genre;
-
+    private LocalDateTime releaseDate;
+    @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.")
+    private String genre;
     @NotBlank(message = "שם במאי של הסרט נדרש.")
     @Size(min = 2, max = 100, message = "שם במאי של הסרט חייב להיות באורך של 2-100 תווים.")
     private String director;
-    @Enumerated(EnumType.STRING)
-    @NotBlank(message = "שפת הסרט נדרשת.")
-    // TODO: Validation for enum
-    private Language language;
-
-    @NotBlank(message = "גיל מינימאלי נדרש.")
+    @ValidEnumValue(enumClass = Language.class, message = "יש לבחור שפה חוקית.")
+    private String language;
     @Range(min = 0, max=18, message = "גיל מינימאלי חייב להיות בין 0 ל18.")
-    private int min_age;
+    @NotNull
+    private Integer minAge;
 
     public Movie() {
     }
 
-    public Movie(String title, String description, int duration, Date release_date, Genre genre, String director, Language language, int min_age) {
+    public Movie(String title, String description, int duration, LocalDateTime releaseDate, String genre, String director, String language, int minAge) {
         this.title = title;
         this.description = description;
         this.duration = duration;
-        this.release_date = release_date;
+        this.releaseDate = releaseDate;
         this.genre = genre;
         this.director = director;
         this.language = language;
-        this.min_age = min_age;
+        this.minAge = minAge;
     }
 
     public Long getId() {
@@ -93,19 +87,19 @@ public class Movie {
         this.duration = duration;
     }
 
-    public Date getRelease_date() {
-        return release_date;
+    public LocalDateTime getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setRelease_date(Date release_date) {
-        this.release_date = release_date;
+    public void setReleaseDate(LocalDateTime releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -117,20 +111,20 @@ public class Movie {
         this.director = director;
     }
 
-    public Language getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(Language language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
-    public int getMin_age() {
-        return min_age;
+    public int getMinAge() {
+        return minAge;
     }
 
-    public void setMin_age(int min_age) {
-        this.min_age = min_age;
+    public void setMinAge(int minAge) {
+        this.minAge = minAge;
     }
 
     @Override
@@ -140,11 +134,11 @@ public class Movie {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", duration=" + duration +
-                ", release_date=" + release_date +
+                ", releaseDate=" + releaseDate +
                 ", genre=" + genre +
                 ", director='" + director + '\'' +
                 ", language=" + language +
-                ", min_age=" + min_age +
+                ", minAge=" + minAge +
                 '}';
     }
 }

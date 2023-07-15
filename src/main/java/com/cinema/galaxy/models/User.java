@@ -1,9 +1,9 @@
 package com.cinema.galaxy.models;
 
 import com.cinema.galaxy.enums.Role;
+import com.cinema.galaxy.validators.ValidEnumValue;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -15,17 +15,13 @@ public class User {
     @NotBlank(message = "שם משתמש נדרש.")
     @Size(min = 5, max = 50, message = "שם משתמש חייב להיות באורך של 5 עד 50 תווים.")
     private String username;
-
     @NotBlank(message = "סיסמא נדרשת.")
     @Size(min = 8, max = 16, message = "סיסמא חייבת להיות באורך של 8 עד 16 תווים.")
     private String password;
+    @ValidEnumValue(enumClass = Role.class, message = "יש לבחור תפקיד חוקי.")
+    private String role;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    // TODO: Validation for enum
-    private Role role;
-
-    public User(String username, String password, Role role) {
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -46,7 +42,7 @@ public class User {
         return password;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
@@ -62,7 +58,7 @@ public class User {
         this.password = password;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
