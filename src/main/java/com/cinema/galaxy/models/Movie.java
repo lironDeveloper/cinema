@@ -8,8 +8,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Range;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Table
@@ -40,6 +43,12 @@ public class Movie {
     @Range(min = 0, max=18, message = "גיל מינימאלי חייב להיות בין 0 ל18.")
     @NotNull
     private Integer minAge;
+    @Column(name = "created_on")
+    @CreationTimestamp
+    private Instant createdOn;
+    @Column(name = "updated_on")
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
 
     public Movie() {
     }
@@ -125,6 +134,22 @@ public class Movie {
 
     public void setMinAge(int minAge) {
         this.minAge = minAge;
+    }
+
+    public Instant getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getLastUpdatedOn() {
+        return lastUpdatedOn;
+    }
+
+    public void setLastUpdatedOn(Instant lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
     }
 
     @Override

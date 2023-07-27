@@ -1,10 +1,10 @@
 package com.cinema.galaxy.controllers;
 
-import com.cinema.galaxy.enums.Genre;
-import com.cinema.galaxy.models.Branch;
+import com.cinema.galaxy.DTOs.MovieDTO;
+import com.cinema.galaxy.DTOs.ReviewDTO;
 import com.cinema.galaxy.models.Movie;
-import com.cinema.galaxy.models.Review;
-import com.cinema.galaxy.services.MovieService;
+import com.cinema.galaxy.services.MovieServiceImpl;
+import com.cinema.galaxy.services.ReviewServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,26 +19,23 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/movie")
 public class MovieController {
-
-    private final MovieService movieService;
-
     @Autowired
-    public MovieController(MovieService movieService){
-        this.movieService = movieService;
-    }
+    private MovieServiceImpl movieServiceImpl;
+    @Autowired
+    private ReviewServiceImpl reviewServiceImpl;
 
     @GetMapping("/genre/{genre}")
-    public ResponseEntity<Page<Movie>> getMoviesByGenre(@PathVariable @Valid String genre,
-                                                        @RequestParam(defaultValue = "0") int page,
-                                                        @RequestParam(defaultValue = "10") int size){
+    public ResponseEntity<List<MovieDTO>> getMoviesByGenre(@PathVariable @Valid String genre,
+                                                           @RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size);
-        Page<Movie> movies = movieService.getMoviesByGenre(genre, pageable);
-        return ResponseEntity.ok(movies);
+        Page<MovieDTO> movies = movieServiceImpl.getMoviesByGenre(genre, pageable);
+        return ResponseEntity.ok(movies.getContent());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable("id") Long id) {
-        Movie movie = movieService.getMovie(id);
+    public ResponseEntity<MovieDTO> getMovieById(@PathVariable("id") Long id) {
+        MovieDTO movie = movieServiceImpl.getMovieById(id);
 
         if(movie != null) {
             return ResponseEntity.ok(movie);
@@ -48,14 +45,14 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> addMovie(@Valid @RequestBody Movie movie) {
-        Movie addedMovie = movieService.addMovie(movie);
+    public ResponseEntity<MovieDTO> addMovie(@Valid @RequestBody MovieDTO movieDTO) {
+        MovieDTO addedMovie = movieServiceImpl.addMovie(movieDTO);
         return new ResponseEntity<>(addedMovie, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBranch(@PathVariable Long id) {
-        if (movieService.deleteMovie(id)) {
+        if (movieServiceImpl.deleteMovie(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
@@ -63,12 +60,22 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable Long id, @Valid @RequestBody Movie updatedMovie) {
-        Movie movie = movieService.updateMovie(id, updatedMovie);
+    public ResponseEntity<MovieDTO> updateMovie(@PathVariable Long id, @Valid @RequestBody MovieDTO updatedMovie) {
+        MovieDTO movie = movieServiceImpl.updateMovie(id, updatedMovie);
         if (movie != null) {
             return new ResponseEntity<>(movie, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/{movieId}/reviews")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByMovieId(
+            @PathVariable Long movieId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ReviewDTO> reviews = reviewServiceImpl.getReviewsByMovieId(movieId, pageable);
+        return ResponseEntity.ok(reviews.getContent());
     }
 }

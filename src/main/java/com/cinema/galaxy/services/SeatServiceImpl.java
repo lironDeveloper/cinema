@@ -2,20 +2,18 @@ package com.cinema.galaxy.services;
 
 import com.cinema.galaxy.models.Seat;
 import com.cinema.galaxy.repositories.SeatRepository;
+import com.cinema.galaxy.serviceInterfaces.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SeatService {
-    private final SeatRepository seatRepository;
-
+public class SeatServiceImpl implements SeatService {
     @Autowired
-    public SeatService(SeatRepository seatRepository){
-        this.seatRepository = seatRepository;
-    }
+    private SeatRepository seatRepository;
 
+    @Override
     public List<Seat> getSeats(){
         return seatRepository.findAll();
     }

@@ -1,11 +1,16 @@
 package com.cinema.galaxy.controllers;
 
 
-import com.cinema.galaxy.models.Branch;
-import com.cinema.galaxy.models.User;
-import com.cinema.galaxy.services.UserService;
+import com.cinema.galaxy.DTOs.ReviewDTO;
+import com.cinema.galaxy.DTOs.UserCreationDTO;
+import com.cinema.galaxy.DTOs.UserDTO;
+import com.cinema.galaxy.services.ReviewServiceImpl;
+import com.cinema.galaxy.services.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +21,29 @@ import java.util.List;
 @RequestMapping(path = "/api/user")
 public class UserController {
 
-    private final UserService userService;
-
     @Autowired
-    public UserController(UserService userService){
-        this.userService = userService;
-    }
+    private UserServiceImpl userServiceImpl;
+    @Autowired
+    private ReviewServiceImpl reviewServiceImpl;
 
     @GetMapping
-    public List<User> getUsers() {
-        return userService.getUsers();
+    public List<UserDTO> getUsers() {
+        return userServiceImpl.getAllUsers();
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreationDTO userCreationDTO) {
+        UserDTO createdUser = userServiceImpl.createUser(userCreationDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{userId}/reviews")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByUserId(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ReviewDTO> reviews = reviewServiceImpl.getReviewsByUserId(userId, pageable);
+        return ResponseEntity.ok(reviews.getContent());
+    }
 }

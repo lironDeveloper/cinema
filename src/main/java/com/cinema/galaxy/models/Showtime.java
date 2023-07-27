@@ -5,7 +5,10 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Table
@@ -28,6 +31,12 @@ public class Showtime {
     @NotNull
     @Future(message = "תאריך סיום הקרנה חייב להיות בעתיד.")
     private LocalDateTime endTime;
+    @Column(name = "created_on")
+    @CreationTimestamp
+    private Instant createdOn;
+    @Column(name = "updated_on")
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
 
     public Showtime(Movie movieId, Hall hallId, LocalDateTime startTime, LocalDateTime endTime) {
         this.movieId = movieId;
@@ -77,6 +86,21 @@ public class Showtime {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+    public Instant getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getLastUpdatedOn() {
+        return lastUpdatedOn;
+    }
+
+    public void setLastUpdatedOn(Instant lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
     }
 
     @Override

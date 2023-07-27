@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.Instant;
 
 @Table
 @Entity
@@ -21,6 +25,12 @@ public class Hall {
     @NotNull
     @Min(value = 1, message = "נדרש לפחות מושב אחד באולם.")
     private Integer capacity;
+    @Column(name = "created_on")
+    @CreationTimestamp
+    private Instant createdOn;
+    @Column(name = "updated_on")
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
 
     public Hall() {
     }
@@ -61,6 +71,22 @@ public class Hall {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public Instant getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getLastUpdatedOn() {
+        return lastUpdatedOn;
+    }
+
+    public void setLastUpdatedOn(Instant lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
     }
 
     @Override

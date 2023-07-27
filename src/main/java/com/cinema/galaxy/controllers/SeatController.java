@@ -1,7 +1,7 @@
 package com.cinema.galaxy.controllers;
 
 import com.cinema.galaxy.models.Seat;
-import com.cinema.galaxy.services.SeatService;
+import com.cinema.galaxy.services.SeatServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,17 +12,12 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/seat")
 public class SeatController {
-
-    private final SeatService seatService;
-
     @Autowired
-    public SeatController(SeatService seatService){
-        this.seatService = seatService;
-    }
+    private SeatServiceImpl seatServiceImpl;
 
     @GetMapping
     public List<Seat> getSeats() {
-        return seatService.getSeats();
+        return seatServiceImpl.getSeats();
     }
 
 }

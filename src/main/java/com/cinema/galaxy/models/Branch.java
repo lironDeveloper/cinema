@@ -3,6 +3,10 @@ package com.cinema.galaxy.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.Instant;
 
 @Table
 @Entity
@@ -22,6 +26,12 @@ public class Branch {
     @NotBlank(message = "איש קשר של הסניף נדרש.")
     @Size(min = 2, max = 50, message = "שם איש קשר חייב להיות באורך של 2-50 תווים.")
     private String contactInfo;
+    @Column(name = "created_on")
+    @CreationTimestamp
+    private Instant createdOn;
+    @Column(name = "updated_on")
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
 
     public Branch(String name, String city, String address, String contactInfo) {
         this.name = name;
@@ -71,6 +81,22 @@ public class Branch {
 
     public void setContactInfo(String contactInfo) {
         this.contactInfo = contactInfo;
+    }
+
+    public Instant getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getLastUpdatedOn() {
+        return lastUpdatedOn;
+    }
+
+    public void setLastUpdatedOn(Instant lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
     }
 
     @Override
