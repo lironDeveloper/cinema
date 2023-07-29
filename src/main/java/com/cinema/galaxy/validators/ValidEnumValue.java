@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Documented
 @Constraint(validatedBy = EnumValueValidator.class)
-@Target({ElementType.FIELD})
+@Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidEnumValue {
     String message() default "Invalid value";

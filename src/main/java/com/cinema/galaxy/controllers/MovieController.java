@@ -2,9 +2,11 @@ package com.cinema.galaxy.controllers;
 
 import com.cinema.galaxy.DTOs.MovieDTO;
 import com.cinema.galaxy.DTOs.ReviewDTO;
+import com.cinema.galaxy.enums.Genre;
 import com.cinema.galaxy.models.Movie;
 import com.cinema.galaxy.services.MovieServiceImpl;
 import com.cinema.galaxy.services.ReviewServiceImpl;
+import com.cinema.galaxy.validators.ValidEnumValue;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,12 +14,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/movie")
+@Validated
 public class MovieController {
     @Autowired
     private MovieServiceImpl movieServiceImpl;
@@ -25,7 +29,7 @@ public class MovieController {
     private ReviewServiceImpl reviewServiceImpl;
 
     @GetMapping("/genre/{genre}")
-    public ResponseEntity<List<MovieDTO>> getMoviesByGenre(@PathVariable @Valid String genre,
+    public ResponseEntity<List<MovieDTO>> getMoviesByGenre(@PathVariable("genre") @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.") String genre,
                                                            @RequestParam(defaultValue = "0") int page,
                                                            @RequestParam(defaultValue = "10") int size){
         Pageable pageable = PageRequest.of(page, size);
