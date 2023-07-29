@@ -17,19 +17,21 @@ public class Showtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה סרט נדרש.")
     @Size(min = 1, max = 255, message = "מזהה סרט חייב להיות באורך של 1 עד 255 תווים.")
-    private Movie movieId;
-    @ManyToOne
+    private Movie movie;
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה אולם נדרש.")
     @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
-    private Hall hallId;
+    private Hall hall;
     @NotNull
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
+    @Column(name = "start_time")
     private LocalDateTime startTime;
     @NotNull
     @Future(message = "תאריך סיום הקרנה חייב להיות בעתיד.")
+    @Column(name = "end_time")
     private LocalDateTime endTime;
     @Column(name = "created_on")
     @CreationTimestamp
@@ -38,9 +40,9 @@ public class Showtime {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public Showtime(Movie movieId, Hall hallId, LocalDateTime startTime, LocalDateTime endTime) {
-        this.movieId = movieId;
-        this.hallId = hallId;
+    public Showtime(Movie movie, Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
+        this.movie = movie;
+        this.hall = hall;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -57,19 +59,19 @@ public class Showtime {
     }
 
     public Movie getMovieId() {
-        return movieId;
+        return movie;
     }
 
-    public void setMovieId(Movie movieId) {
-        this.movieId = movieId;
+    public void setMovieId(Movie movie) {
+        this.movie = movie;
     }
 
     public Hall getHallId() {
-        return hallId;
+        return hall;
     }
 
-    public void setHallId(Hall hallId) {
-        this.hallId = hallId;
+    public void setHallId(Hall hall) {
+        this.hall = hall;
     }
 
     public LocalDateTime getStartTime() {
@@ -101,16 +103,5 @@ public class Showtime {
 
     public void setLastUpdatedOn(Instant lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
-    }
-
-    @Override
-    public String toString() {
-        return "Showtime{" +
-                "id=" + id +
-                ", movieId=" + movieId +
-                ", hallId=" + hallId +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                '}';
     }
 }

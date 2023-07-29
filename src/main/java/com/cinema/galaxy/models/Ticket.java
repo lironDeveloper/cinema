@@ -14,18 +14,18 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה משתמש נדרש.")
     @Size(min = 1, max = 255, message = "מזהה משתמש חייב להיות באורך של 1 עד 255 תווים.")
-    private User userId;
-    @ManyToOne
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה הקרנה נדרש.")
     @Size(min = 1, max = 255, message = "מזהה הקרנה חייב להיות באורך של 1 עד 255 תווים.")
-    private Showtime showtimeId;
-    @ManyToOne
+    private Showtime showtime;
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה מושב נדרש.")
     @Size(min = 1, max = 255, message = "מזהה מושב חייב להיות באורך של 1 עד 255 תווים.")
-    private Seat seatId;
+    private Seat seat;
     @Column(name = "created_on")
     @CreationTimestamp
     private Instant createdOn;
@@ -36,10 +36,10 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(User userId, Showtime showtimeId, Seat seatId) {
-        this.userId = userId;
-        this.showtimeId = showtimeId;
-        this.seatId = seatId;
+    public Ticket(User user, Showtime showtime, Seat seat) {
+        this.user = user;
+        this.showtime = showtime;
+        this.seat = seat;
     }
 
     public Long getId() {
@@ -50,28 +50,28 @@ public class Ticket {
         this.id = id;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Showtime getShowtimeId() {
-        return showtimeId;
+    public Showtime getShowtime() {
+        return showtime;
     }
 
-    public void setShowtimeId(Showtime showtimeId) {
-        this.showtimeId = showtimeId;
+    public void setShowtime(Showtime showtime) {
+        this.showtime = showtime;
     }
 
-    public Seat getSeatId() {
-        return seatId;
+    public Seat getSeat() {
+        return seat;
     }
 
-    public void setSeatId(Seat seatId) {
-        this.seatId = seatId;
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
     public Instant getCreatedOn() {
         return createdOn;
@@ -87,15 +87,5 @@ public class Ticket {
 
     public void setLastUpdatedOn(Instant lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", showtimeId=" + showtimeId +
-                ", seatId=" + seatId +
-                '}';
     }
 }

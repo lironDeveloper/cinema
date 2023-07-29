@@ -25,6 +25,7 @@ public class Branch {
     private String address;
     @NotBlank(message = "איש קשר של הסניף נדרש.")
     @Size(min = 2, max = 50, message = "שם איש קשר חייב להיות באורך של 2-50 תווים.")
+    @Column(name = "contact_info")
     private String contactInfo;
     @Column(name = "created_on")
     @CreationTimestamp

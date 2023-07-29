@@ -1,5 +1,6 @@
 package com.cinema.galaxy.controllers;
 
+import com.cinema.galaxy.DTOs.BranchDTO;
 import com.cinema.galaxy.services.BranchServiceImpl;
 import com.cinema.galaxy.models.Branch;
 import jakarta.validation.Valid;
@@ -17,13 +18,13 @@ public class BranchController {
     private BranchServiceImpl branchServiceImpl;
 
     @GetMapping
-    public List<Branch> getBranches() {
+    public List<BranchDTO> getBranches() {
         return branchServiceImpl.getBranches();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Branch> getBranchById(@PathVariable("id") Long id) {
-        Branch branch = branchServiceImpl.getBranchById(id);
+    public ResponseEntity<BranchDTO> getBranchById(@PathVariable("id") Long id) {
+        BranchDTO branch = branchServiceImpl.getBranchById(id);
 
         if(branch != null) {
             return ResponseEntity.ok(branch);
@@ -33,8 +34,8 @@ public class BranchController {
     }
 
     @PostMapping
-    public ResponseEntity<Branch> createBranch(@Valid @RequestBody Branch branch) {
-        Branch createdBranch = branchServiceImpl.createBranch(branch);
+    public ResponseEntity<BranchDTO> createBranch(@Valid @RequestBody BranchDTO branch) {
+        BranchDTO createdBranch = branchServiceImpl.createBranch(branch);
         return new ResponseEntity<>(createdBranch, HttpStatus.CREATED);
     }
 

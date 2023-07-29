@@ -16,15 +16,17 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה אולם נדרש.")
     @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
-    private Hall hallId;
+    private Hall hall;
     @NotNull
     @Min(value = 1, message = "מספר שורה של מושב חייב להיות גדול מ0.")
+    @Column(name = "row_num")
     private Integer rowNum;
     @NotNull
     @Min(value = 1, message = "מספר עמודה של מושב חייב להיות גדול מ0.")
+    @Column(name = "col_num")
     private Integer colNum;
     @Column(name = "created_on")
     @CreationTimestamp
@@ -33,8 +35,8 @@ public class Seat {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public Seat(Hall hallId, int rowNum, int colNum) {
-        this.hallId = hallId;
+    public Seat(Hall hall, int rowNum, int colNum) {
+        this.hall = hall;
         this.rowNum = rowNum;
         this.colNum = colNum;
     }
@@ -51,11 +53,11 @@ public class Seat {
     }
 
     public Hall getHallId() {
-        return hallId;
+        return hall;
     }
 
-    public void setHallId(Hall hallId) {
-        this.hallId = hallId;
+    public void setHallId(Hall hall) {
+        this.hall = hall;
     }
 
     public int getRowNum() {
@@ -87,15 +89,5 @@ public class Seat {
 
     public void setLastUpdatedOn(Instant lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
-    }
-
-    @Override
-    public String toString() {
-        return "Seat{" +
-                "id=" + id +
-                ", hallId=" + hallId +
-                ", rowNum=" + rowNum +
-                ", colNum=" + colNum +
-                '}';
     }
 }

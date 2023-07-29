@@ -32,6 +32,7 @@ public class Movie {
     private Integer duration; // In minutes
     @NotNull
     @PastOrPresent(message = "תאריך הוצאת סרט חייב להיות בעבר.")
+    @Column(name = "release_date")
     private LocalDateTime releaseDate;
     @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.")
     private String genre;
@@ -42,6 +43,7 @@ public class Movie {
     private String language;
     @Range(min = 0, max=18, message = "גיל מינימאלי חייב להיות בין 0 ל18.")
     @NotNull
+    @Column(name = "min_age")
     private Integer minAge;
     @Column(name = "created_on")
     @CreationTimestamp
@@ -150,20 +152,5 @@ public class Movie {
 
     public void setLastUpdatedOn(Instant lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", duration=" + duration +
-                ", releaseDate=" + releaseDate +
-                ", genre=" + genre +
-                ", director='" + director + '\'' +
-                ", language=" + language +
-                ", minAge=" + minAge +
-                '}';
     }
 }

@@ -17,8 +17,8 @@ public class Hall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "מזהה סניף נדרש.")
-    @ManyToOne
-    private Branch branchId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Branch branch;
     @NotBlank(message = "שם האולם נדרש.")
     @Size(min = 2, max = 50, message = "שם אולם חייב להיות באורך של 2-50 תווים.")
     private String name;
@@ -35,8 +35,8 @@ public class Hall {
     public Hall() {
     }
 
-    public Hall(Branch branchId, String name, int capacity) {
-        this.branchId = branchId;
+    public Hall(Branch branch, String name, int capacity) {
+        this.branch = branch;
         this.name = name;
         this.capacity = capacity;
     }
@@ -50,11 +50,11 @@ public class Hall {
     }
 
     public Branch getBranchId() {
-        return branchId;
+        return branch;
     }
 
-    public void setBranchId(Branch branchId) {
-        this.branchId = branchId;
+    public void setBranchId(Branch branch) {
+        this.branch = branch;
     }
 
     public String getName() {
@@ -93,7 +93,7 @@ public class Hall {
     public String toString() {
         return "Hall{" +
                 "id=" + id +
-                ", branchId=" + branchId +
+                ", branch=" + branch +
                 ", name='" + name + '\'' +
                 ", capacity='" + capacity + '\'' +
                 '}';

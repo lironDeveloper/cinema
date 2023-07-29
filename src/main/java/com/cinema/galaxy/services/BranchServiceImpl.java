@@ -1,33 +1,43 @@
 package com.cinema.galaxy.services;
 
+import com.cinema.galaxy.DTOs.BranchDTO;
+import com.cinema.galaxy.DTOs.UserDTO;
 import com.cinema.galaxy.models.Branch;
+import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.BranchRepository;
 import com.cinema.galaxy.serviceInterfaces.BranchService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BranchServiceImpl implements BranchService {
     @Autowired
     private BranchRepository branchRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
-    public List<Branch> getBranches(){
-        return branchRepository.findAll();
+    public List<BranchDTO> getBranches(){
+        List<Branch> branches = branchRepository.findAll();
+        return branches.stream().map(branch -> modelMapper.map(branch, BranchDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public Branch getBranchById(Long id){
+    public BranchDTO getBranchById(Long id){
          Optional<Branch> branch = branchRepository.findById(id);
-         return branch.orElse(null);
+         return modelMapper.map(branch.orElse(null), BranchDTO.class);
     }
 
     @Override
-    public Branch createBranch(Branch branch){
-        return branchRepository.save(branch);
+    public BranchDTO createBranch(BranchDTO branchDTO){
+        Branch branch = modelMapper.map(branchDTO, Branch.class);
+        Branch savedBranch = branchRepository.save(branch);
+        return modelMapper.map(savedBranch, BranchDTO.class);
     }
 
     @Override
