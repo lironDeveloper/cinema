@@ -3,6 +3,9 @@ package com.cinema.galaxy.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,6 +13,9 @@ import java.time.Instant;
 
 @Table
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,80 +40,10 @@ public class Branch {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public Branch(String name, String city, String address, String contactInfo) {
-        this.name = name;
-        this.city = city;
-        this.address = address;
-        this.contactInfo = contactInfo;
-    }
-
-    public Branch() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getContactInfo() {
-        return contactInfo;
-    }
-
-    public void setContactInfo(String contactInfo) {
-        this.contactInfo = contactInfo;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getLastUpdatedOn() {
-        return lastUpdatedOn;
-    }
-
-    public void setLastUpdatedOn(Instant lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
-    }
-
-    @Override
-    public String toString() {
-        return "Branch{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", city='" + city + '\'' +
-                ", address='" + address + '\'' +
-                ", contactInfo='" + contactInfo + '\'' +
-                '}';
-    }
+//    public Branch(String name, String city, String address, String contactInfo) {
+//        this.name = name;
+//        this.city = city;
+//        this.address = address;
+//        this.contactInfo = contactInfo;
+//    }
 }

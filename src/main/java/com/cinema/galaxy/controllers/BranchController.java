@@ -4,6 +4,7 @@ import com.cinema.galaxy.DTOs.BranchDTO;
 import com.cinema.galaxy.services.BranchServiceImpl;
 import com.cinema.galaxy.models.Branch;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/branch")
+@RequiredArgsConstructor
 public class BranchController {
-    @Autowired
-    private BranchServiceImpl branchServiceImpl;
+    private final BranchServiceImpl branchServiceImpl;
 
     @GetMapping
     public List<BranchDTO> getBranches() {

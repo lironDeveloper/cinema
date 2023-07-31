@@ -6,6 +6,7 @@ import com.cinema.galaxy.models.Branch;
 import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.BranchRepository;
 import com.cinema.galaxy.serviceInterfaces.BranchService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BranchServiceImpl implements BranchService {
-    @Autowired
-    private BranchRepository branchRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+    private final BranchRepository branchRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<BranchDTO> getBranches(){

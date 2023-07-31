@@ -9,6 +9,7 @@ import com.cinema.galaxy.repositories.MovieRepository;
 import com.cinema.galaxy.repositories.ReviewRepository;
 import com.cinema.galaxy.repositories.UserRepository;
 import com.cinema.galaxy.serviceInterfaces.ReviewService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +18,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
-    @Autowired
-    private ReviewRepository reviewRepository;
-    @Autowired
-    private  UserRepository userRepository;
-    @Autowired
-    private MovieRepository movieRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final MovieRepository movieRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public Page<ReviewDTO> getReviewsByMovieId(Long movieId, Pageable pageable){

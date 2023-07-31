@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +15,9 @@ import java.time.Instant;
 
 @Table
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,70 +38,9 @@ public class Hall {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public Hall() {
-    }
-
-    public Hall(Branch branch, String name, int capacity) {
-        this.branch = branch;
-        this.name = name;
-        this.capacity = capacity;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Branch getBranchId() {
-        return branch;
-    }
-
-    public void setBranchId(Branch branch) {
-        this.branch = branch;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getLastUpdatedOn() {
-        return lastUpdatedOn;
-    }
-
-    public void setLastUpdatedOn(Instant lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
-    }
-
-    @Override
-    public String toString() {
-        return "Hall{" +
-                "id=" + id +
-                ", branch=" + branch +
-                ", name='" + name + '\'' +
-                ", capacity='" + capacity + '\'' +
-                '}';
-    }
+//    public Hall(Branch branch, String name, int capacity) {
+//        this.branch = branch;
+//        this.name = name;
+//        this.capacity = capacity;
+//    }
 }

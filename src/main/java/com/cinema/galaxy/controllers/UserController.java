@@ -7,6 +7,7 @@ import com.cinema.galaxy.DTOs.UserDTO;
 import com.cinema.galaxy.services.ReviewServiceImpl;
 import com.cinema.galaxy.services.UserServiceImpl;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,22 +25,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/user")
+@RequiredArgsConstructor
 public class UserController {
-
-    @Autowired
-    private UserServiceImpl userServiceImpl;
-    @Autowired
-    private ReviewServiceImpl reviewServiceImpl;
+    private final UserServiceImpl userServiceImpl;
+    private final ReviewServiceImpl reviewServiceImpl;
 
     @GetMapping
     @Secured("ROLE_ADMIN")
     public List<UserDTO> getUsers() { return userServiceImpl.getAllUsers(); }
-
-//    @PostMapping
-//    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreationDTO userCreationDTO) {
-//        UserDTO createdUser = userServiceImpl.createUser(userCreationDTO);
-//        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-//    }
 
     @GetMapping("/{userId}/reviews")
     public ResponseEntity<List<ReviewDTO>> getReviewsByUserId(

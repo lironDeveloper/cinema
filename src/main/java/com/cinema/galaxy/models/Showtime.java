@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -13,6 +16,9 @@ import java.time.LocalDateTime;
 
 @Table
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Showtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,68 +46,10 @@ public class Showtime {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public Showtime(Movie movie, Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
-        this.movie = movie;
-        this.hall = hall;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
-    public Showtime() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Movie getMovieId() {
-        return movie;
-    }
-
-    public void setMovieId(Movie movie) {
-        this.movie = movie;
-    }
-
-    public Hall getHallId() {
-        return hall;
-    }
-
-    public void setHallId(Hall hall) {
-        this.hall = hall;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getLastUpdatedOn() {
-        return lastUpdatedOn;
-    }
-
-    public void setLastUpdatedOn(Instant lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
-    }
+//    public Showtime(Movie movie, Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
+//        this.movie = movie;
+//        this.hall = hall;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
+//    }
 }

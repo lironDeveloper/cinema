@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +15,9 @@ import java.time.Instant;
 
 @Table
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,55 +45,5 @@ public class Seat {
         this.hall = hall;
         this.rowNum = rowNum;
         this.colNum = colNum;
-    }
-
-    public Seat() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Hall getHallId() {
-        return hall;
-    }
-
-    public void setHallId(Hall hall) {
-        this.hall = hall;
-    }
-
-    public int getRowNum() {
-        return rowNum;
-    }
-
-    public void setRowNum(int rowNum) {
-        this.rowNum = rowNum;
-    }
-
-    public int getColNum() {
-        return colNum;
-    }
-
-    public void setColNum(int colNum) {
-        this.colNum = colNum;
-    }
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getLastUpdatedOn() {
-        return lastUpdatedOn;
-    }
-
-    public void setLastUpdatedOn(Instant lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
     }
 }

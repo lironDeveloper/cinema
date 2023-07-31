@@ -4,6 +4,7 @@ import com.cinema.galaxy.DTOs.MovieDTO;
 import com.cinema.galaxy.models.Movie;
 import com.cinema.galaxy.repositories.MovieRepository;
 import com.cinema.galaxy.serviceInterfaces.MovieService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,11 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
-    @Autowired
-    private MovieRepository movieRepository;
-    @Autowired
-    private ModelMapper modelMapper;
+    private final MovieRepository movieRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public Page<MovieDTO> getMoviesByGenre(String genre, Pageable pageable){

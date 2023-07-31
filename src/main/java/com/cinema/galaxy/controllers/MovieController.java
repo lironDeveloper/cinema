@@ -8,6 +8,7 @@ import com.cinema.galaxy.services.MovieServiceImpl;
 import com.cinema.galaxy.services.ReviewServiceImpl;
 import com.cinema.galaxy.validators.ValidEnumValue;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,11 +23,10 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/movie")
 @Validated
+@RequiredArgsConstructor
 public class MovieController {
-    @Autowired
-    private MovieServiceImpl movieServiceImpl;
-    @Autowired
-    private ReviewServiceImpl reviewServiceImpl;
+    private final MovieServiceImpl movieServiceImpl;
+    private final ReviewServiceImpl reviewServiceImpl;
 
     @GetMapping("/genre/{genre}")
     public ResponseEntity<List<MovieDTO>> getMoviesByGenre(@PathVariable("genre") @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.") String genre,
@@ -40,11 +40,9 @@ public class MovieController {
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable("id") Long id) {
         MovieDTO movie = movieServiceImpl.getMovieById(id);
-
         if(movie != null) {
             return ResponseEntity.ok(movie);
         }
-
         return ResponseEntity.notFound().build();
     }
 

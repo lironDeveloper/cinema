@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Range;
@@ -12,6 +15,9 @@ import java.time.Instant;
 
 @Table
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,73 +41,11 @@ public class Review {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public Review() {
-    }
+//    public Review(User user, Movie movie, int rating, String comment) {
+//        this.user = user;
+//        this.movie = movie;
+//        this.rating = rating;
+//        this.comment = comment;
+//    }
 
-    public Review(User user, Movie movie, int rating, String comment) {
-        this.user = user;
-        this.movie = movie;
-        this.rating = rating;
-        this.comment = comment;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getLastUpdatedOn() {
-        return lastUpdatedOn;
-    }
-
-    public void setLastUpdatedOn(Instant lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
-    }
 }
