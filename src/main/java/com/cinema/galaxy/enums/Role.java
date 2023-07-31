@@ -1,5 +1,5 @@
 package com.cinema.galaxy.enums;
 
 public enum Role {
-    ADMIN, CLIENT;
+    ROLE_ADMIN, ROLE_CLIENT;
 }

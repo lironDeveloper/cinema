@@ -5,8 +5,10 @@ import com.cinema.galaxy.DTOs.UserDTO;
 import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.UserRepository;
 import com.cinema.galaxy.serviceInterfaces.UserService;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +16,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> getAllUsers(){
@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createUser(UserCreationDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDTO.class);
     }

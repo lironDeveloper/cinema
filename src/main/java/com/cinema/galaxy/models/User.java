@@ -3,6 +3,7 @@ package com.cinema.galaxy.models;
 import com.cinema.galaxy.enums.Role;
 import com.cinema.galaxy.validators.ValidEnumValue;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,11 +17,17 @@ public class User {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "שם משתמש נדרש.")
-    @Size(min = 5, max = 50, message = "שם משתמש חייב להיות באורך של 5 עד 50 תווים.")
-    private String username;
-    @NotBlank(message = "סיסמא נדרשת.") // TODO: probably should be only in UserCreationDTO
-    @Size(min = 8, max = 16, message = "סיסמא חייבת להיות באורך של 8 עד 16 תווים.")
+    @NotBlank(message = "אימייל נדרש.")
+    @Email(message = "פורמט לא תקין של אימייל.")
+    private String email;
+    @NotBlank(message = "שם פרטי נדרש.")
+    @Size(min = 5, max = 50, message = "שם פרטי חייב להיות באורך של 5 עד 50 תווים.")
+    @Column(name = "first_name")
+    private String firstName;
+    @NotBlank(message = "שם משפחה נדרש.")
+    @Size(min = 5, max = 50, message = "שם משפחה חייב להיות באורך של 5 עד 50 תווים.")
+    @Column(name = "last_name")
+    private String lastName;
     private String password;
     @ValidEnumValue(enumClass = Role.class, message = "יש לבחור תפקיד חוקי.")
     private String role;
@@ -31,46 +38,65 @@ public class User {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public User(String username, String password, String role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    public User() {
     }
 
-    public User() {
+    public User(String email, String firstName, String lastName, String password, String role) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getUsername() {
-        return username;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public void setRole(String role) {
         this.role = role;
     }
+
     public Instant getCreatedOn() {
         return createdOn;
     }
@@ -86,16 +112,4 @@ public class User {
     public void setLastUpdatedOn(Instant lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                '}';
-    }
-
-
 }
