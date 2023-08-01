@@ -11,7 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-@Table
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "showtime", "seat" }) })
 @Entity
 @Getter
 @Setter
@@ -27,10 +27,12 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה הקרנה נדרש.")
     @Size(min = 1, max = 255, message = "מזהה הקרנה חייב להיות באורך של 1 עד 255 תווים.")
+    @JoinColumn(name = "showtime")
     private Showtime showtime;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה מושב נדרש.")
     @Size(min = 1, max = 255, message = "מזהה מושב חייב להיות באורך של 1 עד 255 תווים.")
+    @JoinColumn(name = "seat")
     private Seat seat;
     @Column(name = "created_on")
     @CreationTimestamp

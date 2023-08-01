@@ -22,6 +22,7 @@ public class Branch {
     private Long id;
     @NotBlank(message = "שם סניף נדרש.")
     @Size(min = 2, max = 50, message = "שם סניף חייב להיות באורך של 2-50 תווים.")
+    @Column(unique = true)
     private String name;
     @NotBlank(message = "שם עיר של סניף נדרש.")
     @Size(min = 2, max = 50, message = "שם עיר חייב להיות באורך של 2-50 תווים.")

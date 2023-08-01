@@ -13,7 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-@Table
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "branch", "name" }) })
 @Entity
 @Getter
 @Setter
@@ -24,9 +24,11 @@ public class Hall {
     private Long id;
     @NotBlank(message = "מזהה סניף נדרש.")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch")
     private Branch branch;
     @NotBlank(message = "שם האולם נדרש.")
     @Size(min = 2, max = 50, message = "שם אולם חייב להיות באורך של 2-50 תווים.")
+    @Column(name = "name")
     private String name;
     @NotNull
     @Min(value = 1, message = "נדרש לפחות מושב אחד באולם.")

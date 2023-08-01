@@ -1,13 +1,15 @@
 package com.cinema.galaxy.controllers;
 
-import com.cinema.galaxy.DTOs.UserAuthRequestDTO;
+import com.cinema.galaxy.DTOs.UserAuthenticationDTO;
 import com.cinema.galaxy.DTOs.UserCreationDTO;
 import com.cinema.galaxy.DTOs.UserDTO;
 import com.cinema.galaxy.config.JwtUtils;
+import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.services.JwtUserDetailsService;
 import com.cinema.galaxy.services.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.authentication.AuthenticationManager;
@@ -29,13 +31,13 @@ public class AuthenticationController {
     private final UserServiceImpl userServiceImpl;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(@Valid @RequestBody UserAuthRequestDTO requestDTO){
+    public ResponseEntity<String> authenticate(@Valid @RequestBody UserAuthenticationDTO userAuthenticationDTO){
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(requestDTO.getEmail(), requestDTO.getPassword())
+                new UsernamePasswordAuthenticationToken(userAuthenticationDTO.getEmail(), userAuthenticationDTO.getPassword())
         );
-        final UserDetails user = jwtUserDetailsService.loadUserByUsername(requestDTO.getEmail());
-        if(user != null){
-            return ResponseEntity.ok(jwtUtils.generateToken(user));
+        final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(userAuthenticationDTO.getEmail());
+        if(userDetails != null){
+            return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
         }
         return ResponseEntity.status(400).body("Some error has occurred");
     }

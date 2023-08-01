@@ -11,8 +11,8 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 public class ReviewDTO {
-    private String userUsername;
-    private String movieTitle;
+    private UserDTO user;
+    private MovieDTO movie;
     private int rating;
     private String comment;
     private Instant createdOn;

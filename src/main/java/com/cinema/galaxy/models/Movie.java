@@ -29,6 +29,7 @@ public class Movie {
     private Long id;
     @NotBlank(message = "שם סרט נדרש.")
     @Size(min = 2, max = 100, message = "שם סרט חייב להיות באורך של 2-100 תווים.")
+    @Column(unique = true)
     private String title;
     @NotBlank(message = "תיאור של סרט נדרש.")
     @Size(min = 2, max = 254, message = "תיאור סרט חייב להיות באורך של 2-254 תווים.")

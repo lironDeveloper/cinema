@@ -13,7 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-@Table
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "hall", "row_num", "col_num" }) })
 @Entity
 @Getter
 @Setter
@@ -25,6 +25,7 @@ public class Seat {
     @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה אולם נדרש.")
     @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
+    @JoinColumn(name = "hall")
     private Hall hall;
     @NotNull
     @Min(value = 1, message = "מספר שורה של מושב חייב להיות גדול מ0.")

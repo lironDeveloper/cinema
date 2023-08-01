@@ -38,10 +38,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDTO addReview(ReviewCreationDTO reviewCreationDTO){
-        // Check if the user with the provided userId exists in the database
-        User user = userRepository.findById(reviewCreationDTO.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("לא קיים משתמש עם המזהה הזה."));
+    public ReviewDTO addReview(ReviewCreationDTO reviewCreationDTO, String email){
+        // Check if the user exists in the database
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("לא קיים משתמש כזה."));
 
         // Check if the movie with the provided movieId exists in the database
         Movie movie = movieRepository.findById(reviewCreationDTO.getMovieId())

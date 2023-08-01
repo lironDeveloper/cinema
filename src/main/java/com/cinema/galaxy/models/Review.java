@@ -41,11 +41,11 @@ public class Review {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-//    public Review(User user, Movie movie, int rating, String comment) {
-//        this.user = user;
-//        this.movie = movie;
-//        this.rating = rating;
-//        this.comment = comment;
-//    }
+    public Review(User user, Movie movie, int rating, String comment) {
+        this.user = user;
+        this.movie = movie;
+        this.rating = rating;
+        this.comment = comment;
+    }
 
 }

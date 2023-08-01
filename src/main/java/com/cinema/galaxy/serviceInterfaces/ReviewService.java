@@ -8,5 +8,5 @@ import org.springframework.data.domain.Pageable;
 public interface ReviewService {
     public Page<ReviewDTO> getReviewsByMovieId(Long movieId, Pageable pageable);
     public Page<ReviewDTO> getReviewsByUserId(Long userId, Pageable pageable);
-    public ReviewDTO addReview(ReviewCreationDTO reviewCreationDTO);
+    public ReviewDTO addReview(ReviewCreationDTO reviewCreationDTO, String email);
 }

@@ -14,7 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-@Table
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "movie", "hall", "start_time", "end_time" }) })
 @Entity
 @Getter
 @Setter
@@ -26,10 +26,12 @@ public class Showtime {
     @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה סרט נדרש.")
     @Size(min = 1, max = 255, message = "מזהה סרט חייב להיות באורך של 1 עד 255 תווים.")
+    @JoinColumn(name = "movie")
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotBlank(message = "מזהה אולם נדרש.")
     @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
+    @JoinColumn(name = "hall")
     private Hall hall;
     @NotNull
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
