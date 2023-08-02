@@ -1,7 +1,7 @@
 package com.cinema.galaxy.serviceInterfaces;
 
-import com.cinema.galaxy.DTOs.ReviewCreationDTO;
-import com.cinema.galaxy.DTOs.ReviewDTO;
+import com.cinema.galaxy.DTOs.Review.ReviewCreationDTO;
+import com.cinema.galaxy.DTOs.Review.ReviewDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

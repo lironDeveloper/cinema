@@ -23,8 +23,6 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotBlank(message = "מזהה אולם נדרש.")
-    @Size(min = 1, max = 255, message = "מזהה אולם חייב להיות באורך של 1 עד 255 תווים.")
     @JoinColumn(name = "hall")
     private Hall hall;
     @NotNull

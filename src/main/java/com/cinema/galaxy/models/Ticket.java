@@ -21,17 +21,12 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotBlank(message = "מזהה משתמש נדרש.")
-    @Size(min = 1, max = 255, message = "מזהה משתמש חייב להיות באורך של 1 עד 255 תווים.")
+    @JoinColumn(name = "user")
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotBlank(message = "מזהה הקרנה נדרש.")
-    @Size(min = 1, max = 255, message = "מזהה הקרנה חייב להיות באורך של 1 עד 255 תווים.")
     @JoinColumn(name = "showtime")
     private Showtime showtime;
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotBlank(message = "מזהה מושב נדרש.")
-    @Size(min = 1, max = 255, message = "מזהה מושב חייב להיות באורך של 1 עד 255 תווים.")
     @JoinColumn(name = "seat")
     private Seat seat;
     @Column(name = "created_on")

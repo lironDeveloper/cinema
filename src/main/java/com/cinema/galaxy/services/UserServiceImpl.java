@@ -1,13 +1,12 @@
 package com.cinema.galaxy.services;
 
-import com.cinema.galaxy.DTOs.UserCreationDTO;
-import com.cinema.galaxy.DTOs.UserDTO;
+import com.cinema.galaxy.DTOs.User.UserCreationDTO;
+import com.cinema.galaxy.DTOs.User.UserDTO;
 import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.UserRepository;
 import com.cinema.galaxy.serviceInterfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

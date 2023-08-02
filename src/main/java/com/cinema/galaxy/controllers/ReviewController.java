@@ -1,11 +1,10 @@
 package com.cinema.galaxy.controllers;
 
-import com.cinema.galaxy.DTOs.ReviewCreationDTO;
-import com.cinema.galaxy.DTOs.ReviewDTO;
+import com.cinema.galaxy.DTOs.Review.ReviewCreationDTO;
+import com.cinema.galaxy.DTOs.Review.ReviewDTO;
 import com.cinema.galaxy.services.ReviewServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

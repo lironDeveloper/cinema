@@ -1,7 +1,6 @@
 package com.cinema.galaxy.serviceInterfaces;
 
-import com.cinema.galaxy.DTOs.BranchDTO;
-import com.cinema.galaxy.models.Branch;
+import com.cinema.galaxy.DTOs.Branch.BranchDTO;
 
 import java.util.List;
 

@@ -12,6 +12,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "branch", "name" }) })
 @Entity
@@ -22,7 +24,6 @@ public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "מזהה סניף נדרש.")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch")
     private Branch branch;
@@ -31,18 +32,17 @@ public class Hall {
     @Column(name = "name")
     private String name;
     @NotNull
-    @Min(value = 1, message = "נדרש לפחות מושב אחד באולם.")
-    private Integer capacity;
+    @Min(value = 1, message = "נדרש לפחות שורה אחת באולם.")
+    @Column(name = "rows_num")
+    private Integer numOfRows;
+    @NotNull
+    @Min(value = 1, message = "נדרש לפחות עמודה אחת באולם.")
+    @Column(name = "cols_num")
+    private Integer numOfColumns;
     @Column(name = "created_on")
     @CreationTimestamp
     private Instant createdOn;
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Instant lastUpdatedOn;
-
-//    public Hall(Branch branch, String name, int capacity) {
-//        this.branch = branch;
-//        this.name = name;
-//        this.capacity = capacity;
-//    }
 }

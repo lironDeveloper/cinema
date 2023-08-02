@@ -1,12 +1,13 @@
 package com.cinema.galaxy.services;
 
-import com.cinema.galaxy.DTOs.MovieDTO;
+import com.cinema.galaxy.DTOs.Movie.MovieCreationDTO;
+import com.cinema.galaxy.DTOs.Movie.MovieDTO;
+import com.cinema.galaxy.DTOs.Movie.MovieUpdateDTO;
 import com.cinema.galaxy.models.Movie;
 import com.cinema.galaxy.repositories.MovieRepository;
 import com.cinema.galaxy.serviceInterfaces.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieDTO addMovie(MovieDTO movieDTO){
-        Movie movie = modelMapper.map(movieDTO, Movie.class);
+    public MovieDTO addMovie(MovieCreationDTO movieCreationDTO){
+        Movie movie = modelMapper.map(movieCreationDTO, Movie.class);
         Movie addedMovie = movieRepository.save(movie);
         return modelMapper.map(addedMovie, MovieDTO.class);
     }
@@ -49,17 +50,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieDTO updateMovie(Long id, MovieDTO updatedMovie) {
-        Movie movie = movieRepository.findById(id).orElse(null);
-        if (movie != null) {
-            movie.setTitle(updatedMovie.getTitle());
-            movie.setDescription(updatedMovie.getDescription());
-            movie.setDuration(updatedMovie.getDuration());
-            movie.setReleaseDate(updatedMovie.getReleaseDate());
-            movie.setGenre(updatedMovie.getGenre());
-            movie.setDirector(updatedMovie.getDirector());
-            movie.setLanguage(updatedMovie.getLanguage());
-            movie.setMinAge(updatedMovie.getMinAge());
+    public MovieDTO updateMovie(Long id, MovieUpdateDTO movieUpdateDTO) {
+        Optional<Movie> movieOptional = movieRepository.findById(id);
+        if (movieOptional.isPresent()) {
+            Movie movie = movieOptional.get();
+            modelMapper.map(movieUpdateDTO, movie);
             Movie editedMovie = movieRepository.save(movie);
             return modelMapper.map(editedMovie, MovieDTO.class);
         }

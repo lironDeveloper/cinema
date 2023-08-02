@@ -4,7 +4,7 @@ services:
     environment:
       - 'MYSQL_DATABASE=cinemagalaxy'
       - 'MYSQL_PASSWORD=p@ssw!rd'
-      - 'MYSQL_ROOT_PASSWORD=p@ssw!rd'
+#      - 'MYSQL_ROOT_PASSWORD=p@ssw!rd'
       - 'MYSQL_USER=admin'
     ports:
       - '3306'

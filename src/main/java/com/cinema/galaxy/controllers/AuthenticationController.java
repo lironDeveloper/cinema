@@ -1,15 +1,13 @@
 package com.cinema.galaxy.controllers;
 
-import com.cinema.galaxy.DTOs.UserAuthenticationDTO;
-import com.cinema.galaxy.DTOs.UserCreationDTO;
-import com.cinema.galaxy.DTOs.UserDTO;
+import com.cinema.galaxy.DTOs.User.UserAuthenticationDTO;
+import com.cinema.galaxy.DTOs.User.UserCreationDTO;
+import com.cinema.galaxy.DTOs.User.UserDTO;
 import com.cinema.galaxy.config.JwtUtils;
-import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.services.JwtUserDetailsService;
 import com.cinema.galaxy.services.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.authentication.AuthenticationManager;

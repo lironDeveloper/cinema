@@ -1,14 +1,11 @@
 package com.cinema.galaxy.services;
 
-import com.cinema.galaxy.DTOs.BranchDTO;
-import com.cinema.galaxy.DTOs.UserDTO;
+import com.cinema.galaxy.DTOs.Branch.BranchDTO;
 import com.cinema.galaxy.models.Branch;
-import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.BranchRepository;
 import com.cinema.galaxy.serviceInterfaces.BranchService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

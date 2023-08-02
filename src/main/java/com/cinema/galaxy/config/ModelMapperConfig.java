@@ -1,8 +1,6 @@
 package com.cinema.galaxy.config;
 
-import com.cinema.galaxy.DTOs.ReviewCreationDTO;
-import com.cinema.galaxy.DTOs.UserDTO;
-import com.cinema.galaxy.models.Review;
+import com.cinema.galaxy.DTOs.User.UserDTO;
 import com.cinema.galaxy.models.User;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -16,6 +14,7 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
 
         Converter<User, String> userToUserDTOConverter = context -> {
             User source = context.getSource();

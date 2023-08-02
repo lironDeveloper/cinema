@@ -1,4 +1,4 @@
-package com.cinema.galaxy.DTOs;
+package com.cinema.galaxy.DTOs.Branch;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.cinema.galaxy.models;
 
 import com.cinema.galaxy.enums.Role;
-import com.cinema.galaxy.validators.ValidEnumValue;
+import com.cinema.galaxy.validators.enumValidator.ValidEnumValue;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

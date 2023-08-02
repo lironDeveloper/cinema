@@ -1,9 +1,10 @@
-package com.cinema.galaxy.validators;
+package com.cinema.galaxy.validators.enumValidator;
 
 import java.lang.annotation.*;
+
+import com.cinema.galaxy.validators.enumValidator.EnumValueValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.NotNull;
 
 @Documented
 @Constraint(validatedBy = EnumValueValidator.class)

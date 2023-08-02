@@ -1,7 +1,7 @@
 package com.cinema.galaxy.serviceInterfaces;
 
-import com.cinema.galaxy.DTOs.UserCreationDTO;
-import com.cinema.galaxy.DTOs.UserDTO;
+import com.cinema.galaxy.DTOs.User.UserCreationDTO;
+import com.cinema.galaxy.DTOs.User.UserDTO;
 
 import java.util.List;
 

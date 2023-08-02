@@ -1,4 +1,4 @@
-package com.cinema.galaxy.validators;
+package com.cinema.galaxy.validators.enumValidator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -20,6 +20,6 @@ public class EnumValueValidator implements ConstraintValidator<ValidEnumValue, S
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return  values.contains(value);
+        return value == null || values.contains(value);
     }
 }

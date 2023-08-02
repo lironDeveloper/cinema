@@ -1,4 +1,4 @@
-package com.cinema.galaxy.DTOs;
+package com.cinema.galaxy.DTOs.Review;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

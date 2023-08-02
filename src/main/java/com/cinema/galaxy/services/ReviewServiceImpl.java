@@ -1,7 +1,7 @@
 package com.cinema.galaxy.services;
 
-import com.cinema.galaxy.DTOs.ReviewCreationDTO;
-import com.cinema.galaxy.DTOs.ReviewDTO;
+import com.cinema.galaxy.DTOs.Review.ReviewCreationDTO;
+import com.cinema.galaxy.DTOs.Review.ReviewDTO;
 import com.cinema.galaxy.models.Movie;
 import com.cinema.galaxy.models.Review;
 import com.cinema.galaxy.models.User;
@@ -11,8 +11,6 @@ import com.cinema.galaxy.repositories.UserRepository;
 import com.cinema.galaxy.serviceInterfaces.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
