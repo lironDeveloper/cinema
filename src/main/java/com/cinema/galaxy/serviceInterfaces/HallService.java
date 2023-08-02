@@ -7,7 +7,7 @@ import com.cinema.galaxy.DTOs.Hall.HallUpdateDTO;
 import java.util.List;
 
 public interface HallService {
-    public List<HallDTO> getHalls();
+    public List<HallDTO> getHallsByBranchId(Long branchId);
     public HallDTO createHall(HallCreationDTO hall);
     public HallDTO getHallById(Long hallId);
     HallDTO updateHall(Long id, HallUpdateDTO hall);

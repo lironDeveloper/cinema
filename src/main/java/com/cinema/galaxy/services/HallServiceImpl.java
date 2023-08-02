@@ -30,8 +30,8 @@ public class HallServiceImpl implements HallService {
     private final ModelMapper modelMapper;
 
     @Override
-    public List<HallDTO> getHalls(){ //TODO: remove?
-        List<Hall> halls = hallRepository.findAll();
+    public List<HallDTO> getHallsByBranchId(Long branchId) {
+        List<Hall> halls = hallRepository.findAllByBranchId(branchId);
         return halls.stream().map(hall -> modelMapper.map(hall, HallDTO.class))
                 .collect(Collectors.toList());
     }

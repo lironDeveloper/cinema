@@ -19,9 +19,9 @@ import java.util.List;
 public class HallController {
     private final HallServiceImpl hallServiceImpl;
 
-    @GetMapping
-    public List<HallDTO> getHalls() {
-        return hallServiceImpl.getHalls();
+    @GetMapping("/branch/{id}")
+    public List<HallDTO> getHallsByBranchId(@PathVariable("id") Long id) {
+        return hallServiceImpl.getHallsByBranchId(id);
     }
 
     @PostMapping

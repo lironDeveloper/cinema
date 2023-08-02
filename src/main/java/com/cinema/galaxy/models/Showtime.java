@@ -14,7 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "movie", "hall", "start_time", "end_time" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "movie_id", "hall_id", "start_time", "end_time" }) })
 @Entity
 @Getter
 @Setter

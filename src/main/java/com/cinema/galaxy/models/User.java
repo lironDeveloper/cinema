@@ -46,12 +46,4 @@ public class User {
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Instant lastUpdatedOn;
-
-//    public User(String email, String firstName, String lastName, String password, String role) {
-//        this.email = email;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.password = password;
-//        this.role = role;
-//    }
 }

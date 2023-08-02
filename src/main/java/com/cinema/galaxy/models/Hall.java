@@ -15,7 +15,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "branch", "name" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "branch_id", "name" }) })
 @Entity
 @Getter
 @Setter

@@ -13,7 +13,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "hall", "row_num", "col_num" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "hall_id", "row_num", "col_num" }) })
 @Entity
 @Getter
 @Setter
