@@ -23,7 +23,7 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hall")
+    @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
     @NotNull
     @Min(value = 1, message = "מספר שורה של מושב חייב להיות גדול מ0.")

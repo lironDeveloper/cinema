@@ -25,7 +25,7 @@ public class Hall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "branch")
+    @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
     @NotBlank(message = "שם האולם נדרש.")
     @Size(min = 2, max = 50, message = "שם אולם חייב להיות באורך של 2-50 תווים.")

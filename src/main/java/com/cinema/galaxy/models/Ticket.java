@@ -21,13 +21,13 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "showtime")
+    @JoinColumn(name = "showtime_id", nullable = false)
     private Showtime showtime;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat")
+    @JoinColumn(name = "seat_id", nullable = false)
     private Seat seat;
     @Column(name = "created_on")
     @CreationTimestamp

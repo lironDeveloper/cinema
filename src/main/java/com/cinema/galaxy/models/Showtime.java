@@ -24,10 +24,10 @@ public class Showtime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie")
+    @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hall")
+    @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
     @NotNull
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
