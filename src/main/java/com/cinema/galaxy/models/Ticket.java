@@ -35,11 +35,4 @@ public class Ticket {
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Instant lastUpdatedOn;
-
-//    public Ticket(User user, Showtime showtime, Seat seat) {
-//        this.user = user;
-//        this.showtime = showtime;
-//        this.seat = seat;
-//    }
-
 }

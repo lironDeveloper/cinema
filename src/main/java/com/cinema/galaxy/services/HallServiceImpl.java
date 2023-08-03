@@ -91,7 +91,7 @@ public class HallServiceImpl implements HallService {
                             seat.getColNum(),
                             seat.getRowNum(),
                             seat.getHall().getId()
-                    ) == null){
+                    ).isEmpty()){
                         seatRepository.save(seat);
                     }
                 }

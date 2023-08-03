@@ -40,9 +40,4 @@ public class Seat {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-    public Seat(Hall hall, int rowNum, int colNum) {
-        this.hall = hall;
-        this.rowNum = rowNum;
-        this.colNum = colNum;
-    }
 }
