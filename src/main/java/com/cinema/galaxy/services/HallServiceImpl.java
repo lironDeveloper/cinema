@@ -39,7 +39,7 @@ public class HallServiceImpl implements HallService {
     @Override
     @Transactional
     public HallDTO createHall(HallCreationDTO hallCreationDTO) {
-        // Check if the movie with the provided movieId exists in the database
+        // Check if the branch with the provided branchId exists in the database
         Branch branch = branchRepository.findById(hallCreationDTO.getBranchId())
                 .orElseThrow(() -> new IllegalArgumentException("לא קיים סניף עם המזהה הזה."));
 
@@ -104,17 +104,11 @@ public class HallServiceImpl implements HallService {
     }
 
     @Override
-    @Transactional
     public boolean deleteHall(Long hallId) {
         if (hallRepository.existsById(hallId)) {
-            // First, delete all seats associated with the hall
-            seatRepository.deleteAllByHallId(hallId);
-
-            // Then, delete the hall itself
             hallRepository.deleteById(hallId);
             return true;
         }
-
         return false;
     }
 

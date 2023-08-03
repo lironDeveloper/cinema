@@ -14,7 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "movie_id", "hall_id", "start_time", "end_time" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "movie_id", "hall_id", "start_time" }) })
 @Entity
 @Getter
 @Setter
@@ -33,21 +33,10 @@ public class Showtime {
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
     @Column(name = "start_time")
     private LocalDateTime startTime;
-    @NotNull
-    @Future(message = "תאריך סיום הקרנה חייב להיות בעתיד.")
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
     @Column(name = "created_on")
     @CreationTimestamp
     private Instant createdOn;
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Instant lastUpdatedOn;
-
-//    public Showtime(Movie movie, Hall hall, LocalDateTime startTime, LocalDateTime endTime) {
-//        this.movie = movie;
-//        this.hall = hall;
-//        this.startTime = startTime;
-//        this.endTime = endTime;
-//    }
 }

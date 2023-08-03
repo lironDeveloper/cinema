@@ -45,4 +45,7 @@ public class Hall {
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Instant lastUpdatedOn;
+
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Seat> seats = new ArrayList<>();
 }
