@@ -42,7 +42,7 @@ public class TicketController {
             @RequestParam(defaultValue = "10") int size) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Pageable pageable = PageRequest.of(page, size);
-        Page<TicketDetailsDTO> tickets = ticketServiceImpl.getTicketsByUserId(email, pageable);
+        Page<TicketDetailsDTO> tickets = ticketServiceImpl.getTicketsByUser(email, pageable);
         return ResponseEntity.ok(tickets.getContent());
     }
 

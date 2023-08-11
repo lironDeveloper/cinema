@@ -37,7 +37,7 @@ public class User {
     @Size(min = 5, max = 50, message = "שם משפחה חייב להיות באורך של 5 עד 50 תווים.")
     @Column(name = "last_name")
     private String lastName;
-    @Size(min = 8, max = 16, message = "סיסמא חייבת להיות באורך של 8 עד 16 תווים.")
+    @Size(min = 8, message = "סיסמא חייבת להיות באורך של מעל 8 תווים.")
     @NotBlank(message = "סיסמא נדרשת.")
     private String password;
     @ValidEnumValue(enumClass = Role.class, message = "יש לבחור תפקיד חוקי.")

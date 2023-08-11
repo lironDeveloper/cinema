@@ -65,12 +65,12 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Page<TicketDetailsDTO> getTicketsByUserId(String email, Pageable page) {
+    public Page<TicketDetailsDTO> getTicketsByUser(String email, Pageable page) {
         // Check if the user exists in the database
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("לא קיים משתמש כזה."));
 
-        Page<Ticket> tickets = ticketRepository.findAllByUserId(user.getId());
+        Page<Ticket> tickets = ticketRepository.findAllByUserId(user.getId(), page);
         return tickets.map(ticket -> modelMapper.map(ticket, TicketDetailsDTO.class));
     }
 

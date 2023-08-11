@@ -14,11 +14,11 @@ import java.util.List;
 @RequestMapping(path = "/api/seat")
 @RequiredArgsConstructor
 public class SeatController {
-    private final SeatServiceImpl seatServiceImpl;
+//    private final SeatServiceImpl seatServiceImpl;
 
-    @GetMapping
-    public List<Seat> getSeats() {
-        return seatServiceImpl.getSeats();
-    }
+//    @GetMapping
+//    public List<Seat> getSeats() {
+//        return seatServiceImpl.getSeats();
+//    }
 
 }

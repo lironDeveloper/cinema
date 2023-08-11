@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface TicketService {
     public TicketDetailsDTO reserveTicket(TicketReservationDTO ticketReservationDTO, String email);
-    public Page<TicketDetailsDTO> getTicketsByUserId(String email, Pageable page);
+    public Page<TicketDetailsDTO> getTicketsByUser(String email, Pageable page);
     public List<TicketSeatDetailsDTO> getTicketsByShowtimeId(Long showtimeId);
     public boolean deleteReservation(Long ticketId, String email);
 }
