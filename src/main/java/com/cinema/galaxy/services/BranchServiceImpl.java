@@ -1,5 +1,6 @@
 package com.cinema.galaxy.services;
 
+import com.cinema.galaxy.DTOs.Branch.BranchCreationDTO;
 import com.cinema.galaxy.DTOs.Branch.BranchDTO;
 import com.cinema.galaxy.models.Branch;
 import com.cinema.galaxy.repositories.BranchRepository;
@@ -31,8 +32,8 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public BranchDTO createBranch(BranchDTO branchDTO){
-        Branch branch = modelMapper.map(branchDTO, Branch.class);
+    public BranchDTO createBranch(BranchCreationDTO branchCreationDTO){
+        Branch branch = modelMapper.map(branchCreationDTO, Branch.class);
         Branch savedBranch = branchRepository.save(branch);
         return modelMapper.map(savedBranch, BranchDTO.class);
     }

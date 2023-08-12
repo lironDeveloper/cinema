@@ -1,7 +1,5 @@
 package com.cinema.galaxy.services;
 
-import com.cinema.galaxy.DTOs.Hall.HallDTO;
-import com.cinema.galaxy.DTOs.Review.ReviewDTO;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeCreationDTO;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeDTO;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeUpdateDTO;
@@ -14,12 +12,10 @@ import com.cinema.galaxy.serviceInterfaces.ShowtimeService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +31,8 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
     @Override
     public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchId(Long movieId, Long branchId, LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable) {
-        Page<Showtime> showtimes = showtimeRepository.findByMovieIdAndHall_BranchIdAndStartTimeBetween(movieId, branchId, fromDate, toDate, pageable);
-        return showtimes.map(showtime -> modelMapper.map(showtime, ShowtimeDTO.class));
+        Page<Showtime> showtimeList = showtimeRepository.findByMovieIdAndHall_BranchIdAndStartTimeBetween(movieId, branchId, fromDate, toDate, pageable);
+        return showtimeList.map(showtime -> modelMapper.map(showtime, ShowtimeDTO.class));
     }
 
     @Override
@@ -52,6 +48,12 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         Showtime showtime = modelMapper.map(showtimeCreationDTO, Showtime.class);
         showtime.setHall(hall);
         showtime.setMovie(movie);
+        showtime.setEndTime(showtime.getStartTime().plusMinutes(movie.getDuration()));
+
+        // Check if the hall is not occupied between start time - end time
+        if(isHallOccupied(showtime)){
+            throw new IllegalArgumentException("האולם המבוקש תפוס בזמן הרצוי.");
+        }
 
         // Save the showtime to the database
         Showtime savedShowtime = showtimeRepository.save(showtime);
@@ -66,11 +68,11 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     }
 
     @Override
+    @Transactional
     public ShowtimeDTO updateShowtime(Long id, ShowtimeUpdateDTO showtimeUpdateDTO) {
         Optional<Showtime> showtimeOptional = showtimeRepository.findById(id);
         if (showtimeOptional.isPresent()) {
             Showtime showtime = showtimeOptional.get();
-            modelMapper.map(showtimeUpdateDTO, showtime);
 
             // Check if the hall with the provided hallId exists in the database
             if(showtimeUpdateDTO.getHallId() != null) {
@@ -86,6 +88,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
                         .orElseThrow(() -> new IllegalArgumentException("לא קיים סרט עם המזהה הזה."));
                 showtime.setMovie(movie);
             }
+            modelMapper.map(showtimeUpdateDTO, showtime);
+
+            showtime.setEndTime(showtime.getStartTime().plusMinutes(showtime.getMovie().getDuration()));
+
+            // Check if the hall is not occupied between start time - end time
+            if(isHallOccupied(showtime)){
+                throw new IllegalArgumentException("האולם המבוקש תפוס בזמן הרצוי.");
+            }
 
             Showtime editedShowtime = showtimeRepository.save(showtime);
             return modelMapper.map(editedShowtime, ShowtimeDTO.class);
@@ -100,5 +110,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             return true;
         }
         return false;
+    }
+
+    private boolean isHallOccupied(Showtime newShowtime){
+            return showtimeRepository.existsConflictingShowtime(
+                newShowtime.getId(),
+                newShowtime.getHall().getId(),
+                newShowtime.getStartTime(),
+                newShowtime.getEndTime()
+            );
     }
 }

@@ -27,17 +27,14 @@ public class Hall {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", nullable = false)
     private Branch branch;
-    @NotBlank(message = "שם האולם נדרש.")
     @Size(min = 2, max = 50, message = "שם אולם חייב להיות באורך של 2-50 תווים.")
-    @Column(name = "name")
+    @Column(nullable = false)
     private String name;
-    @NotNull
     @Min(value = 1, message = "נדרש לפחות שורה אחת באולם.")
-    @Column(name = "rows_num")
+    @Column(name = "rows_num", nullable = false)
     private Integer numOfRows;
-    @NotNull
     @Min(value = 1, message = "נדרש לפחות עמודה אחת באולם.")
-    @Column(name = "cols_num")
+    @Column(name = "cols_num", nullable = false)
     private Integer numOfColumns;
     @Column(name = "created_on")
     @CreationTimestamp
@@ -48,4 +45,6 @@ public class Hall {
 
     @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seat> seats = new ArrayList<>();
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Showtime> showtimeList = new ArrayList<>();
 }

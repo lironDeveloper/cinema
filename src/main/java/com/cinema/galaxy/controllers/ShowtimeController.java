@@ -73,13 +73,13 @@ public class ShowtimeController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ShowtimeDTO> showtimes = showtimeServiceImpl.getShowtimeByMovieIdAndBranchId(
+        Page<ShowtimeDTO> showtimeList = showtimeServiceImpl.getShowtimeByMovieIdAndBranchId(
                 movieId,
                 branchId,
                 fromDate,
                 toDate,
                 pageable
         );
-        return ResponseEntity.ok(showtimes.getContent());
+        return ResponseEntity.ok(showtimeList.getContent());
     }
 }

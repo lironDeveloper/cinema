@@ -25,20 +25,21 @@ public class MovieCreationDTO {
     @Size(min = 2, max = 254, message = "תיאור סרט חייב להיות באורך של 2-254 תווים.")
     private String description;
     @Range(min = 1, max=300, message = "אורך סרט חייב להיות בין דקה ל5 שעות.")
-    @NotNull
+    @NotNull(message = "יש לציין אורך סרט")
     private Integer duration;
-    @NotNull
+    @NotNull(message = "יש לציין תאריך הוצאת סרט")
     @PastOrPresent(message = "תאריך הוצאת סרט חייב להיות בעבר.")
     private LocalDateTime releaseDate;
-    @NotNull
+    @NotNull(message = "יש לבחור זאנר חוקי.")
     @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.")
     private String genre;
     @NotBlank(message = "שם במאי של הסרט נדרש.")
     @Size(min = 2, max = 100, message = "שם במאי של הסרט חייב להיות באורך של 2-100 תווים.")
     private String director;
     @ValidEnumValue(enumClass = Language.class, message = "יש לבחור שפה חוקית.")
+    @NotNull(message = "יש לציין את שפת הסרט.")
     private String language;
     @Range(min = 0, max=18, message = "גיל מינימאלי חייב להיות בין 0 ל18.")
-    @NotNull
+    @NotNull(message = "יש לציין גיל מינימאלי")
     private Integer minAge;
 }

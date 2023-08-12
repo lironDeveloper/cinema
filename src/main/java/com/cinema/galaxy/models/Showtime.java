@@ -13,6 +13,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "movie_id", "hall_id", "start_time" }) })
 @Entity
@@ -29,14 +31,18 @@ public class Showtime {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hall_id", nullable = false)
     private Hall hall;
-    @NotNull
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
-    @Column(name = "start_time")
+    @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime; // This column is calculated according the duration of the movie
     @Column(name = "created_on")
     @CreationTimestamp
     private Instant createdOn;
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Instant lastUpdatedOn;
+
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets = new ArrayList<>();
 }

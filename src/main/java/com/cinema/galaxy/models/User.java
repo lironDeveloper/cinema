@@ -2,6 +2,7 @@ package com.cinema.galaxy.models;
 
 import com.cinema.galaxy.enums.Role;
 import com.cinema.galaxy.validators.enumValidator.ValidEnumValue;
+import com.cinema.galaxy.validators.uniqueEmailValidator.UniqueEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -14,6 +15,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -25,22 +28,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "אימייל נדרש.")
     @Email(message = "פורמט לא תקין של אימייל.")
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @UniqueEmail
     private String email;
-    @NotBlank(message = "שם פרטי נדרש.")
-    @Size(min = 5, max = 50, message = "שם פרטי חייב להיות באורך של 5 עד 50 תווים.")
-    @Column(name = "first_name")
+    @Size(min = 2, max = 50, message = "שם פרטי חייב להיות באורך של 2 עד 50 תווים.")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @NotBlank(message = "שם משפחה נדרש.")
-    @Size(min = 5, max = 50, message = "שם משפחה חייב להיות באורך של 5 עד 50 תווים.")
-    @Column(name = "last_name")
+    @Size(min = 2, max = 50, message = "שם משפחה חייב להיות באורך של 2 עד 50 תווים.")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
     @Size(min = 8, message = "סיסמא חייבת להיות באורך של מעל 8 תווים.")
-    @NotBlank(message = "סיסמא נדרשת.")
+    @Column(nullable = false)
     private String password;
     @ValidEnumValue(enumClass = Role.class, message = "יש לבחור תפקיד חוקי.")
+    @Column(nullable = false)
     private String role;
     @Column(name = "created_on")
     @CreationTimestamp
@@ -48,4 +50,9 @@ public class User {
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Instant lastUpdatedOn;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ticket> tickets = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 }

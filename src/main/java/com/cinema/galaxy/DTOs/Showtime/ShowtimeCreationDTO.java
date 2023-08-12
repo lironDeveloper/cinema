@@ -23,7 +23,4 @@ public class ShowtimeCreationDTO {
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
     @NotNull(message = "יש לציין תאריך ושעת תחילת הקרנה")
     private LocalDateTime startTime;
-//    @Future(message = "תאריך סיום הקרנה חייב להיות בעתיד.")
-//    @NotNull(message = "יש לציין תאריך ושעת סיום הקרנה")
-//    private LocalDateTime endTime;
 }

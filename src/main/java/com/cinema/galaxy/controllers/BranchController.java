@@ -1,11 +1,13 @@
 package com.cinema.galaxy.controllers;
 
+import com.cinema.galaxy.DTOs.Branch.BranchCreationDTO;
 import com.cinema.galaxy.DTOs.Branch.BranchDTO;
 import com.cinema.galaxy.services.BranchServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,12 +35,14 @@ public class BranchController {
     }
 
     @PostMapping
-    public ResponseEntity<BranchDTO> createBranch(@Valid @RequestBody BranchDTO branch) {
-        BranchDTO createdBranch = branchServiceImpl.createBranch(branch);
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<BranchDTO> createBranch(@Valid @RequestBody BranchCreationDTO branchCreationDTO) {
+        BranchDTO createdBranch = branchServiceImpl.createBranch(branchCreationDTO);
         return new ResponseEntity<>(createdBranch, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteBranch(@PathVariable Long id) {
         if (branchServiceImpl.deleteBranch(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

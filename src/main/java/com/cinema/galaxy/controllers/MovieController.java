@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,12 +48,14 @@ public class MovieController {
     }
 
     @PostMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<MovieDTO> addMovie(@Valid @RequestBody MovieCreationDTO movieCreationDTO) {
         MovieDTO addedMovie = movieServiceImpl.addMovie(movieCreationDTO);
         return new ResponseEntity<>(addedMovie, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
         if (movieServiceImpl.deleteMovie(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -62,6 +65,7 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<MovieDTO> updateMovie(@PathVariable Long id, @Valid @RequestBody MovieUpdateDTO movieUpdateDTO) {
         MovieDTO movie = movieServiceImpl.updateMovie(id, movieUpdateDTO);
         if (movie != null) {
@@ -79,5 +83,11 @@ public class MovieController {
         Pageable pageable = PageRequest.of(page, size);
         Page<ReviewDTO> reviews = reviewServiceImpl.getReviewsByMovieId(movieId, pageable);
         return ResponseEntity.ok(reviews.getContent());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieDTO>> searchMovies(@RequestParam String keyword) {
+        List<MovieDTO> searchResults = movieServiceImpl.searchMovies(keyword);
+        return ResponseEntity.ok(searchResults);
     }
 }

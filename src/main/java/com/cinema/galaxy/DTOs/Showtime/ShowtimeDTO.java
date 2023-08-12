@@ -17,6 +17,6 @@ public class ShowtimeDTO {
     private MovieDTO movie;
     private HallDTO hall;
     private LocalDateTime startTime;
-//    private LocalDateTime endTime;
+    private LocalDateTime endTime;
     private Instant createdOn;
 }

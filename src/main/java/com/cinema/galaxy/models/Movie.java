@@ -17,6 +17,8 @@ import org.hibernate.validator.constraints.Range;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table
 @Entity
@@ -27,30 +29,29 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "שם סרט נדרש.")
     @Size(min = 2, max = 100, message = "שם סרט חייב להיות באורך של 2-100 תווים.")
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String title;
-    @NotBlank(message = "תיאור של סרט נדרש.")
     @Size(min = 2, max = 254, message = "תיאור סרט חייב להיות באורך של 2-254 תווים.")
+    @Column(nullable = false)
     private String description;
     @Range(min = 1, max=300, message = "אורך סרט חייב להיות בין דקה ל5 שעות.")
-    @NotNull
+    @Column(nullable = false)
     private Integer duration; // In minutes
-    @NotNull
     @PastOrPresent(message = "תאריך הוצאת סרט חייב להיות בעבר.")
-    @Column(name = "release_date")
+    @Column(name = "release_date", nullable = false)
     private LocalDateTime releaseDate;
     @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.")
+    @Column(nullable = false)
     private String genre;
-    @NotBlank(message = "שם במאי של הסרט נדרש.")
     @Size(min = 2, max = 100, message = "שם במאי של הסרט חייב להיות באורך של 2-100 תווים.")
+    @Column(nullable = false)
     private String director;
     @ValidEnumValue(enumClass = Language.class, message = "יש לבחור שפה חוקית.")
+    @Column(nullable = false)
     private String language;
     @Range(min = 0, max=18, message = "גיל מינימאלי חייב להיות בין 0 ל18.")
-    @NotNull
-    @Column(name = "min_age")
+    @Column(name = "min_age", nullable = false)
     private Integer minAge;
     @Column(name = "created_on")
     @CreationTimestamp
@@ -59,14 +60,8 @@ public class Movie {
     @UpdateTimestamp
     private Instant lastUpdatedOn;
 
-//    public Movie(String title, String description, int duration, LocalDateTime releaseDate, String genre, String director, String language, int minAge) {
-//        this.title = title;
-//        this.description = description;
-//        this.duration = duration;
-//        this.releaseDate = releaseDate;
-//        this.genre = genre;
-//        this.director = director;
-//        this.language = language;
-//        this.minAge = minAge;
-//    }
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Showtime> showtimeList = new ArrayList<>();
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 }

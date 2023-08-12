@@ -28,11 +28,11 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
-    @NotNull
     @Range(min = 1, max = 5, message = "דירוג הביקורת הוא מספר בין 1 ל5.")
+    @Column(nullable = false)
     private Integer rating;
-    @NotBlank(message = "תגובה לביקורת נדרשת.")
     @Size(min = 5, max = 255, message = "תגובה לביקורת חייבת להיות באורך של 5 עד 255 תווים.")
+    @Column(nullable = false)
     private String comment;
     @Column(name = "created_on")
     @CreationTimestamp
