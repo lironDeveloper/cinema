@@ -26,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/ticket")
 @RequiredArgsConstructor
+@CrossOrigin
 public class TicketController {
     private final TicketServiceImpl ticketServiceImpl;
 

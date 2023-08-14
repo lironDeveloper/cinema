@@ -9,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/user")
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
     private final UserServiceImpl userServiceImpl;
     private final ReviewServiceImpl reviewServiceImpl;
@@ -25,6 +28,13 @@ public class UserController {
     @GetMapping
     @Secured("ROLE_ADMIN")
     public List<UserDTO> getUsers() { return userServiceImpl.getAllUsers(); }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getUser(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO user = userServiceImpl.getUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
     @GetMapping("/{userId}/reviews")
     public ResponseEntity<List<ReviewDTO>> getReviewsByUserId(

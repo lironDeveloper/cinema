@@ -44,6 +44,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUserByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return modelMapper.map(user.orElse(null), UserDTO.class);
+    }
+
+    @Override
     public UserDTO updateUser(UserDTO user) {
         return null;
     }

@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/hall")
 @RequiredArgsConstructor
+@CrossOrigin
 public class HallController {
     private final HallServiceImpl hallServiceImpl;
 

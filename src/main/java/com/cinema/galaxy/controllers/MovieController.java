@@ -25,6 +25,7 @@ import java.util.List;
 @RequestMapping(path = "/api/movie")
 @Validated
 @RequiredArgsConstructor
+@CrossOrigin
 public class MovieController {
     private final MovieServiceImpl movieServiceImpl;
     private final ReviewServiceImpl reviewServiceImpl;

@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/branch")
 @RequiredArgsConstructor
+@CrossOrigin
 public class BranchController {
     private final BranchServiceImpl branchServiceImpl;
 

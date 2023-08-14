@@ -9,6 +9,7 @@ public interface UserService {
     public List<UserDTO> getAllUsers();
     public UserDTO createUser(UserCreationDTO user);
     public UserDTO getUserById(Long userId);
+    public UserDTO getUserByEmail(String email);
     UserDTO updateUser(UserDTO user);
     public void deleteUser(Long userId);
 }

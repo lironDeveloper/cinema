@@ -24,6 +24,7 @@ import java.util.List;
 @RequestMapping(path = "/api/showtime")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin
 public class ShowtimeController {
     private final ShowtimeServiceImpl showtimeServiceImpl;
 

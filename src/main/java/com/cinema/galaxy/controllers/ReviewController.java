@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/api/review")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ReviewController {
     private final ReviewServiceImpl reviewServiceImpl;
 
