@@ -12,6 +12,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,6 +46,13 @@ public class GlobalExceptionHandler {
         List<String> errors = new ArrayList<>();
         errors.add(ex.getMessage());
         return createErrorResponse(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add("סיסמא לא נכונה."); // TODO: improve
+        return createErrorResponse(errors, HttpStatus.UNAUTHORIZED);
     }
 
     private ResponseEntity<Object> createErrorResponse(List<String> errors, HttpStatus httpStatus) {

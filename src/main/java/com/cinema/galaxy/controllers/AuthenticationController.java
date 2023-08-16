@@ -16,6 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -28,14 +32,15 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<String> authenticate(@Valid @RequestBody UserAuthenticationDTO userAuthenticationDTO){
+        final UserDTO userDTO = userServiceImpl.getUserByEmail(userAuthenticationDTO.getEmail());
+        if(userDTO == null){
+            throw new IllegalArgumentException(".שם משתמש לא קיים"); // TODO: fit the exception type
+        }
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userAuthenticationDTO.getEmail(), userAuthenticationDTO.getPassword())
         );
-        final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(userAuthenticationDTO.getEmail());
-        if(userDetails != null){
-            return ResponseEntity.ok(jwtUtils.generateToken(userDetails));
-        }
-        return ResponseEntity.status(400).body("Some error has occurred");
+        return ResponseEntity.ok(jwtUtils.generateToken(userDTO.getEmail()));
     }
 
     @PostMapping("/signup")

@@ -27,7 +27,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
             return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
         } else {
-            throw new UsernameNotFoundException("יש להוסיף אסימון לבקשה.");
+            throw new UsernameNotFoundException("משתמש לא קיים.");
         }
     }
 }

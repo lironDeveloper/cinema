@@ -42,14 +42,14 @@ public class JwtUtils {
         return expiration.before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails);
+        return createToken(claims, email);
     }
 
-    private String createToken(Map<String, Object> claims, UserDetails userDetails) {
+    private String createToken(Map<String, Object> claims, String email) {
         return Jwts.builder().setClaims(claims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1000))) //TODO: change to 24
                 .signWith(SignatureAlgorithm.HS512, secret)

@@ -40,13 +40,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        return modelMapper.map(user.orElse(null), UserDTO.class);
+        return user.isPresent()? modelMapper.map(user, UserDTO.class): null;
     }
 
     @Override
     public UserDTO getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        return modelMapper.map(user.orElse(null), UserDTO.class);
+        return user.isPresent()? modelMapper.map(user, UserDTO.class): null;
+
     }
 
     @Override
