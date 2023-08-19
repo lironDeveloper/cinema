@@ -23,7 +23,7 @@ public class UserCreationDTO {
     @Size(min = 2, max = 50, message = "שם פרטי חייב להיות באורך של 2 עד 50 תווים.")
     private String firstName;
     @NotBlank(message = "שם משפחה נדרש.")
-    @Size(min = 5, max = 50, message = "שם משפחה חייב להיות באורך של 2 עד 50 תווים.")
+    @Size(min = 2, max = 50, message = "שם משפחה חייב להיות באורך של 2 עד 50 תווים.")
     private String lastName;
     @Size(min = 8, max = 16, message = "סיסמא חייבת להיות באורך של 8 עד 16 תווים.")
     @NotBlank(message = "סיסמא נדרשת.")

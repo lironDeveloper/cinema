@@ -14,10 +14,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -90,5 +92,25 @@ public class MovieController {
     public ResponseEntity<List<MovieDTO>> searchMovies(@RequestParam String keyword) {
         List<MovieDTO> searchResults = movieServiceImpl.searchMovies(keyword);
         return ResponseEntity.ok(searchResults);
+    }
+
+    @PostMapping("/thumbnail/upload/{movieId}")
+    public ResponseEntity<String> thumbnailUploading(@RequestParam("file") MultipartFile file, @PathVariable Long movieId) throws Exception {
+        if(movieServiceImpl.saveThumbnail(file, movieId)){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/thumbnail/{movieId}")
+    public ResponseEntity<byte[]> getThumbnailById(@PathVariable Long movieId) {
+        byte[] thumbnail = movieServiceImpl.getThumbnailByMovieId(movieId);
+        if(thumbnail != null){
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(thumbnail);
+        }
+        return ResponseEntity.notFound().build();
     }
 }

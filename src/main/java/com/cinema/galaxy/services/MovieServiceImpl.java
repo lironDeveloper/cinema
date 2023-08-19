@@ -4,16 +4,18 @@ import com.cinema.galaxy.DTOs.Movie.MovieCreationDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieUpdateDTO;
 import com.cinema.galaxy.models.Movie;
+import com.cinema.galaxy.models.MovieThumbnail;
 import com.cinema.galaxy.repositories.MovieRepository;
 import com.cinema.galaxy.serviceInterfaces.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,5 +69,38 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDTO> searchMovies(String keyword) {
         List<Movie> movies = movieRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrDirectorContainingIgnoreCase(keyword, keyword, keyword);
         return movies.stream().map(movie -> modelMapper.map(movie, MovieDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean saveThumbnail(MultipartFile file, Long id) throws Exception {
+        final int MAX_FILE_SIZE = 1024 * 1024; // 1MB
+        Optional<Movie> movieOptional = movieRepository.findById(id);
+        if (movieOptional.isPresent()) {
+            Set<String> validContentTypes = new HashSet<>(List.of(
+                    MediaType.IMAGE_PNG_VALUE
+            ));
+
+            if (!validContentTypes.contains(file.getContentType())) {
+                throw new IllegalArgumentException("פורמט הקובץ שהועלה אינו נתמך. יש להעלות קבצי PNG בלבד.");
+            }
+
+            if (file.getBytes().length > MAX_FILE_SIZE) {
+                throw new IllegalArgumentException("התמונה שהועלתה חורגת מהגודל המקסימלי.");
+            }
+
+            Movie movie = movieOptional.get();
+            MovieThumbnail thumbnail = Optional.ofNullable(movie.getMovieThumbnail()).orElse(new MovieThumbnail());
+            thumbnail.setThumbnail(file.getBytes());
+            movie.setMovieThumbnail(thumbnail);
+            movieRepository.save(movie);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public byte[] getThumbnailByMovieId(Long id) {
+        Optional<Movie> movieOptional = movieRepository.findById(id);
+        return movieOptional.map(movie -> movie.getMovieThumbnail().getThumbnail()).orElse(null);
     }
 }

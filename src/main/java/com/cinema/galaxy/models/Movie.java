@@ -53,6 +53,9 @@ public class Movie {
     @Range(min = 0, max=18, message = "גיל מינימאלי חייב להיות בין 0 ל18.")
     @Column(name = "min_age", nullable = false)
     private Integer minAge;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "thumbnail_id", referencedColumnName = "id")
+    private MovieThumbnail movieThumbnail;
     @Column(name = "created_on")
     @CreationTimestamp
     private Instant createdOn;
