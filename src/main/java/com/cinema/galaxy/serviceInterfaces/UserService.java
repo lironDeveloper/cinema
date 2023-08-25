@@ -10,6 +10,5 @@ public interface UserService {
     public UserDTO createUser(UserCreationDTO user);
     public UserDTO getUserById(Long userId);
     public UserDTO getUserByEmail(String email);
-    UserDTO updateUser(UserDTO user);
-    public void deleteUser(Long userId);
+    public boolean changeUsersRole(Long userId, String role);
 }

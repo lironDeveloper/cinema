@@ -56,12 +56,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(UserDTO user) {
-        return null;
-    }
-
-    @Override
-    public void deleteUser(Long userId) {
-
+    public boolean changeUsersRole(Long userId, String role){
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()){
+            User user = userOptional.get();
+            user.setRole(role);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 }
