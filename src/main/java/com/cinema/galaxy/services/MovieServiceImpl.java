@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<MovieDTO> getMoviesByGenre(String genre, Pageable pageable){
-        Page<Movie> movies = movieRepository.findByGenreOrderByReleaseDate(genre, pageable);
+        Page<Movie> movies = movieRepository.findByGenreAndFutureShowtime(genre, LocalDateTime.now(), pageable);
         return movies.map(movie -> modelMapper.map(movie, MovieDTO.class));
     }
 
