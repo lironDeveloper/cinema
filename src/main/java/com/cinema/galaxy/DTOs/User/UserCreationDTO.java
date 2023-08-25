@@ -26,7 +26,4 @@ public class UserCreationDTO {
     @Size(min = 8, max = 16, message = "סיסמא חייבת להיות באורך של 8 עד 16 תווים.")
     @NotBlank(message = "סיסמא נדרשת.")
     private String password;
-    @ValidEnumValue(enumClass = Role.class, message = "יש לבחור תפקיד חוקי.")
-    @NotNull(message = "יש לציין תפקיד המשתמש.")
-    private String role;
 }

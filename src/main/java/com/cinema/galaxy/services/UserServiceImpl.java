@@ -2,6 +2,7 @@ package com.cinema.galaxy.services;
 
 import com.cinema.galaxy.DTOs.User.UserCreationDTO;
 import com.cinema.galaxy.DTOs.User.UserDTO;
+import com.cinema.galaxy.enums.Role;
 import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.UserRepository;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
         User user = modelMapper.map(userDTO, User.class);
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
+        user.setRole(String.valueOf(Role.ROLE_CLIENT));
         try {
             User savedUser = userRepository.save(user);
             return modelMapper.map(savedUser, UserDTO.class);
