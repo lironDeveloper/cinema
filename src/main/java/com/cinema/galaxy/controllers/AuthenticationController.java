@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,10 +24,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Validated
 @CrossOrigin
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
-    private final JwtUserDetailsService jwtUserDetailsService;
     private final JwtUtils jwtUtils;
     private final UserServiceImpl userServiceImpl;
 

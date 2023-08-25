@@ -31,7 +31,7 @@ public class ShowtimeController {
 
     @PostMapping
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<ShowtimeDTO> addShowtime(@RequestBody ShowtimeCreationDTO showtimeCreationDTO){
+    public ResponseEntity<ShowtimeDTO> addShowtime(@Valid @RequestBody ShowtimeCreationDTO showtimeCreationDTO){
         ShowtimeDTO addedShowtime = showtimeServiceImpl.addShowtime(showtimeCreationDTO);
         return new ResponseEntity<>(addedShowtime, HttpStatus.CREATED);
     }
@@ -57,7 +57,7 @@ public class ShowtimeController {
 
     @PutMapping("/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<ShowtimeDTO> updateShowtime(@PathVariable Long id, @RequestBody ShowtimeUpdateDTO showtimeUpdateDTO) {
+    public ResponseEntity<ShowtimeDTO> updateShowtime(@PathVariable Long id, @Valid @RequestBody ShowtimeUpdateDTO showtimeUpdateDTO) {
         try {
             ShowtimeDTO showtime = showtimeServiceImpl.updateShowtime(id, showtimeUpdateDTO);
             if (showtime != null) {
@@ -72,10 +72,10 @@ public class ShowtimeController {
 
     @GetMapping("/movie/{movieId}/branch/{branchId}")
     public ResponseEntity<List<ShowtimeDTO>> getShowtimeByMovieIdAndBranchId(
-            @NotNull(message = "יש לציין מזהה סרט") @PathVariable("movieId") Long movieId,
-            @NotNull(message = "יש לציין מזהה סניף") @PathVariable("branchId") Long branchId,
-            @NotNull(message = "יש לציין תאריך תחילת טווח") @Future @RequestParam LocalDateTime fromDate,
-            @NotNull(message = "יש לציין תאריך סוף טווח") @Future @RequestParam LocalDateTime toDate,
+            @PathVariable("movieId") Long movieId,
+            @PathVariable("branchId") Long branchId,
+            @NotNull(message = "יש לציין תאריך תחילת טווח") @Future(message = "תאריך חייב להיות בעתיד.") @RequestParam LocalDateTime fromDate,
+            @NotNull(message = "יש לציין תאריך סוף טווח") @Future(message = "תאריך חייב להיות בעתיד.") @RequestParam LocalDateTime toDate,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);

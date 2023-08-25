@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/ticket")
 @RequiredArgsConstructor
+@Validated
 @CrossOrigin
 public class TicketController {
     private final TicketServiceImpl ticketServiceImpl;

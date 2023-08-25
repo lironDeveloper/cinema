@@ -9,6 +9,8 @@ import com.cinema.galaxy.services.MovieServiceImpl;
 import com.cinema.galaxy.services.ReviewServiceImpl;
 import com.cinema.galaxy.validators.enumValidator.ValidEnumValue;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,8 +27,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/movie")
-@Validated
 @RequiredArgsConstructor
+@Validated
 @CrossOrigin
 public class MovieController {
     private final MovieServiceImpl movieServiceImpl;
@@ -89,13 +91,13 @@ public class MovieController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<MovieDTO>> searchMovies(@RequestParam String keyword) {
+    public ResponseEntity<List<MovieDTO>> searchMovies(@NotBlank(message = "חיפוש חייב להכיל לפחות תו אחד.") @RequestParam String keyword) {
         List<MovieDTO> searchResults = movieServiceImpl.searchMovies(keyword);
         return ResponseEntity.ok(searchResults);
     }
 
     @PostMapping("/thumbnail/upload/{movieId}")
-    public ResponseEntity<String> thumbnailUploading(@RequestParam("file") MultipartFile file, @PathVariable Long movieId) throws Exception {
+    public ResponseEntity<String> thumbnailUploading(@NotNull(message = "יש לצרף קובץ.") @RequestParam("file") MultipartFile file, @PathVariable Long movieId) throws Exception {
         if(movieServiceImpl.saveThumbnail(file, movieId)){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

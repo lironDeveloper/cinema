@@ -8,11 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/review")
 @RequiredArgsConstructor
+@Validated
 @CrossOrigin
 public class ReviewController {
     private final ReviewServiceImpl reviewServiceImpl;
