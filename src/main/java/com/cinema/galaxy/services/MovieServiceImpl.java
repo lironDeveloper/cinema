@@ -3,6 +3,7 @@ package com.cinema.galaxy.services;
 import com.cinema.galaxy.DTOs.Movie.MovieCreationDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieUpdateDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.models.Movie;
 import com.cinema.galaxy.models.MovieThumbnail;
 import com.cinema.galaxy.repositories.MovieRepository;
@@ -26,7 +27,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<MovieDTO> getMoviesByGenre(String genre, Pageable pageable){
-        Page<Movie> movies = movieRepository.findByGenre(genre, pageable);
+        Page<Movie> movies = movieRepository.findByGenreOrderByReleaseDate(genre, pageable);
         return movies.map(movie -> modelMapper.map(movie, MovieDTO.class));
     }
 
@@ -39,8 +40,12 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDTO addMovie(MovieCreationDTO movieCreationDTO){
         Movie movie = modelMapper.map(movieCreationDTO, Movie.class);
-        Movie addedMovie = movieRepository.save(movie);
-        return modelMapper.map(addedMovie, MovieDTO.class);
+        try {
+            Movie addedMovie = movieRepository.save(movie);
+            return modelMapper.map(addedMovie, MovieDTO.class);
+        } catch (Exception exception){
+            throw new UniqueException("סרט זה כבר קיים.");
+        }
     }
 
     @Override
@@ -59,8 +64,12 @@ public class MovieServiceImpl implements MovieService {
         if (movieOptional.isPresent()) {
             Movie movie = movieOptional.get();
             modelMapper.map(movieUpdateDTO, movie);
-            Movie editedMovie = movieRepository.save(movie);
-            return modelMapper.map(editedMovie, MovieDTO.class);
+            try {
+                Movie editedMovie = movieRepository.save(movie);
+                return modelMapper.map(editedMovie, MovieDTO.class);
+            } catch (Exception exception){
+                throw new UniqueException("סרט זה כבר קיים.");
+            }
         }
         return null;
     }

@@ -3,6 +3,7 @@ package com.cinema.galaxy.services;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeCreationDTO;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeDTO;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeUpdateDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.models.*;
 import com.cinema.galaxy.repositories.BranchRepository;
 import com.cinema.galaxy.repositories.HallRepository;
@@ -55,10 +56,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             throw new IllegalArgumentException("האולם המבוקש תפוס בזמן הרצוי.");
         }
 
-        // Save the showtime to the database
-        Showtime savedShowtime = showtimeRepository.save(showtime);
+        try{
+            // Save the showtime to the database
+            Showtime savedShowtime = showtimeRepository.save(showtime);
 
-        return modelMapper.map(savedShowtime, ShowtimeDTO.class);
+            return modelMapper.map(savedShowtime, ShowtimeDTO.class);
+        } catch (Exception exception){
+            throw new UniqueException("הקרנה של סרט זה באולם זה בשעה הזו כבר קיימת.");
+        }
     }
 
     @Override

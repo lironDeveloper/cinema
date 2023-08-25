@@ -7,6 +7,7 @@ import com.cinema.galaxy.DTOs.Showtime.ShowtimeDTO;
 import com.cinema.galaxy.DTOs.Ticket.TicketDetailsDTO;
 import com.cinema.galaxy.DTOs.Ticket.TicketReservationDTO;
 import com.cinema.galaxy.DTOs.Ticket.TicketSeatDetailsDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.models.*;
 import com.cinema.galaxy.repositories.SeatRepository;
 import com.cinema.galaxy.repositories.ShowtimeRepository;
@@ -58,10 +59,13 @@ public class TicketServiceImpl implements TicketService {
         ticket.setShowtime(showtime);
         ticket.setSeat(seat);
 
-        // Save the ticket in the database
-        Ticket addedTicket = ticketRepository.save(ticket);
-
-        return modelMapper.map(addedTicket, TicketDetailsDTO.class);
+        try {
+            // Save the ticket in the database
+            Ticket addedTicket = ticketRepository.save(ticket);
+            return modelMapper.map(addedTicket, TicketDetailsDTO.class);
+        } catch (Exception exception){
+            throw new UniqueException("כרטיס במושב זה בהקרנה הזו כבר קיים.");
+        }
     }
 
     @Override

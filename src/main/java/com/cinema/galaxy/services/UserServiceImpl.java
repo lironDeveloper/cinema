@@ -2,6 +2,7 @@ package com.cinema.galaxy.services;
 
 import com.cinema.galaxy.DTOs.User.UserCreationDTO;
 import com.cinema.galaxy.DTOs.User.UserDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.models.User;
 import com.cinema.galaxy.repositories.UserRepository;
 import com.cinema.galaxy.serviceInterfaces.UserService;
@@ -33,8 +34,12 @@ public class UserServiceImpl implements UserService {
         User user = modelMapper.map(userDTO, User.class);
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
-        User savedUser = userRepository.save(user);
-        return modelMapper.map(savedUser, UserDTO.class);
+        try {
+            User savedUser = userRepository.save(user);
+            return modelMapper.map(savedUser, UserDTO.class);
+        } catch (Exception exception){
+            throw new UniqueException("משתמש עם אימייל זה כבר קיים.");
+        }
     }
 
     @Override

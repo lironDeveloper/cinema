@@ -3,6 +3,7 @@ package com.cinema.galaxy.controllers;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeCreationDTO;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeDTO;
 import com.cinema.galaxy.DTOs.Showtime.ShowtimeUpdateDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.services.ShowtimeServiceImpl;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
@@ -57,11 +58,15 @@ public class ShowtimeController {
     @PutMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<ShowtimeDTO> updateShowtime(@PathVariable Long id, @RequestBody ShowtimeUpdateDTO showtimeUpdateDTO) {
-        ShowtimeDTO showtime = showtimeServiceImpl.updateShowtime(id, showtimeUpdateDTO);
-        if (showtime != null) {
-            return new ResponseEntity<>(showtime, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            ShowtimeDTO showtime = showtimeServiceImpl.updateShowtime(id, showtimeUpdateDTO);
+            if (showtime != null) {
+                return new ResponseEntity<>(showtime, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (org.springframework.dao.DataIntegrityViolationException e){ // Update transaction we check here and not in the service layer since springs functionality
+            throw new UniqueException("הקרנה של סרט זה באולם זה בשעה הזו כבר קיימת.");
         }
     }
 

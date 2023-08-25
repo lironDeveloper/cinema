@@ -3,6 +3,7 @@ package com.cinema.galaxy.controllers;
 import com.cinema.galaxy.DTOs.Hall.HallCreationDTO;
 import com.cinema.galaxy.DTOs.Hall.HallDTO;
 import com.cinema.galaxy.DTOs.Hall.HallUpdateDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.services.HallServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,11 +55,15 @@ public class HallController {
     @PutMapping("/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<HallDTO> updateHall(@PathVariable Long id, @Valid @RequestBody HallUpdateDTO hallUpdateDTO) {
-        HallDTO hall = hallServiceImpl.updateHall(id, hallUpdateDTO);
-        if (hall != null) {
-            return new ResponseEntity<>(hall, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            HallDTO hall = hallServiceImpl.updateHall(id, hallUpdateDTO);
+            if (hall != null) {
+                return new ResponseEntity<>(hall, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (org.springframework.dao.DataIntegrityViolationException e){ // Update transaction we check here and not in the service layer since springs functionality
+            throw new UniqueException("אולם בשם זה בסניף הזה כבר קיים.");
         }
     }
 }

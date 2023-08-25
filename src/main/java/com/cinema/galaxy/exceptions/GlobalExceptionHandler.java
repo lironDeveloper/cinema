@@ -55,6 +55,13 @@ public class GlobalExceptionHandler {
         return createErrorResponse(errors, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(UniqueException.class)
+    public ResponseEntity<Object> handleUniqueException(UniqueException ex) {
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+        return createErrorResponse(errors, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     private ResponseEntity<Object> createErrorResponse(List<String> errors, HttpStatus httpStatus) {
         Map<String, Object> body = new HashMap<>();
         body.put("errors", errors);

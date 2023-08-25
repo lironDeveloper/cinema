@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    Page<Movie> findByGenre(String genre, Pageable pageable);
+    Page<Movie> findByGenreOrderByReleaseDate(String genre, Pageable pageable);
     List<Movie> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrDirectorContainingIgnoreCase(
             String titleKeyword, String descriptionKeyword, String directorNameKeyword);
 }

@@ -2,6 +2,7 @@ package com.cinema.galaxy.services;
 
 import com.cinema.galaxy.DTOs.Branch.BranchCreationDTO;
 import com.cinema.galaxy.DTOs.Branch.BranchDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.models.Branch;
 import com.cinema.galaxy.repositories.BranchRepository;
 import com.cinema.galaxy.serviceInterfaces.BranchService;
@@ -34,8 +35,12 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public BranchDTO createBranch(BranchCreationDTO branchCreationDTO){
         Branch branch = modelMapper.map(branchCreationDTO, Branch.class);
-        Branch savedBranch = branchRepository.save(branch);
-        return modelMapper.map(savedBranch, BranchDTO.class);
+        try {
+            Branch savedBranch = branchRepository.save(branch);
+            return modelMapper.map(savedBranch, BranchDTO.class);
+        } catch (Exception exception){
+            throw new UniqueException("סניף עם שם זה כבר קיים.");
+        }
     }
 
     @Override

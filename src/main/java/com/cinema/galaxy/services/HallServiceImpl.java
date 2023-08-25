@@ -3,6 +3,7 @@ package com.cinema.galaxy.services;
 import com.cinema.galaxy.DTOs.Hall.HallCreationDTO;
 import com.cinema.galaxy.DTOs.Hall.HallDTO;
 import com.cinema.galaxy.DTOs.Hall.HallUpdateDTO;
+import com.cinema.galaxy.exceptions.UniqueException;
 import com.cinema.galaxy.models.Branch;
 import com.cinema.galaxy.models.Hall;
 import com.cinema.galaxy.models.Seat;
@@ -16,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,17 +48,21 @@ public class HallServiceImpl implements HallService {
         Hall hall = modelMapper.map(hallCreationDTO, Hall.class);
         hall.setBranch(branch);
 
-        // Save the hall to the database
-        Hall savedHall = hallRepository.save(hall);
+        try {
+            // Save the hall to the database
+            Hall savedHall = hallRepository.save(hall);
 
-        // Create new seats
-        List<Seat> seats = createSeatsForHall(savedHall);
-        seatRepository.saveAll(seats);
+            // Create new seats
+            List<Seat> seats = createSeatsForHall(savedHall);
+            seatRepository.saveAll(seats);
 
-        // Update the hall in the database with the associated seats
-        savedHall = hallRepository.save(savedHall);
+            // Update the hall in the database with the associated seats
+            savedHall = hallRepository.save(savedHall);
 
-        return modelMapper.map(savedHall, HallDTO.class);
+            return modelMapper.map(savedHall, HallDTO.class);
+        } catch (Exception exception){
+                throw new UniqueException(String.format("אולם בשם זה בסניף %s כבר קיים.", branch.getName()));
+        }
     }
 
     @Override
@@ -77,6 +83,9 @@ public class HallServiceImpl implements HallService {
 
             modelMapper.map(hallUpdateDTO, hall);
 
+            // Try save the hall with the updated data
+            hallRepository.save(hall);
+
             if (oldNumOfColumns != hall.getNumOfColumns() ||
                 oldNumOfRows != hall.getNumOfRows()) {
                 // Delete all existing seats associated with the hall
@@ -96,9 +105,9 @@ public class HallServiceImpl implements HallService {
                     }
                 }
             }
+                Hall editedHall = hallRepository.save(hall);
+                return modelMapper.map(editedHall, HallDTO.class);
 
-            Hall editedHall = hallRepository.save(hall);
-            return modelMapper.map(editedHall, HallDTO.class);
         }
         return null;
     }

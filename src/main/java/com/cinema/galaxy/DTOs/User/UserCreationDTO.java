@@ -2,7 +2,6 @@ package com.cinema.galaxy.DTOs.User;
 
 import com.cinema.galaxy.enums.Role;
 import com.cinema.galaxy.validators.enumValidator.ValidEnumValue;
-import com.cinema.galaxy.validators.uniqueEmailValidator.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +16,6 @@ import lombok.Setter;
 public class UserCreationDTO {
     @NotBlank(message = "אימייל נדרש.")
     @Email(message = "פורמט לא תקין של אימייל.")
-    @UniqueEmail
     private String email;
     @NotBlank(message = "שם פרטי נדרש.")
     @Size(min = 2, max = 50, message = "שם פרטי חייב להיות באורך של 2 עד 50 תווים.")

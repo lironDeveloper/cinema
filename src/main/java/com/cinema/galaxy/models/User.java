@@ -2,7 +2,6 @@ package com.cinema.galaxy.models;
 
 import com.cinema.galaxy.enums.Role;
 import com.cinema.galaxy.validators.enumValidator.ValidEnumValue;
-import com.cinema.galaxy.validators.uniqueEmailValidator.UniqueEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,7 +29,6 @@ public class User {
     private Long id;
     @Email(message = "פורמט לא תקין של אימייל.")
     @Column(unique = true, nullable = false)
-    @UniqueEmail
     private String email;
     @Size(min = 2, max = 50, message = "שם פרטי חייב להיות באורך של 2 עד 50 תווים.")
     @Column(name = "first_name", nullable = false)
