@@ -94,7 +94,7 @@ public class HallServiceImpl implements HallService {
                 // Get new seats with the updated capacity
                 List<Seat> newSeats = createSeatsForHall(hall);
 
-                // If seat already exist, there is no need to recreate it
+                // If seat already exist, there is no need to recreate it again
                 for(Seat seat: newSeats){
                     if(seatRepository.findSeatByColNumAndRowNumAndHallId(
                             seat.getColNum(),
