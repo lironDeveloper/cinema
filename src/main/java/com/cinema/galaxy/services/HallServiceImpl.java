@@ -122,8 +122,8 @@ public class HallServiceImpl implements HallService {
     }
 
     private List<Seat> createSeatsForHall(Hall hall) {
-        int hallWidth = hall.getNumOfRows();
-        int hallHeight = hall.getNumOfColumns();
+        int hallWidth = hall.getNumOfColumns();
+        int hallHeight = hall.getNumOfRows();
 
         List<Seat> seats = new ArrayList<>();
 

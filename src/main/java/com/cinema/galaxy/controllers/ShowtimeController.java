@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -70,20 +71,35 @@ public class ShowtimeController {
         }
     }
 
+    @GetMapping("/movie/{movieId}/branch/{branchId}/time")
+    public ResponseEntity<List<ShowtimeDTO>> getShowtimeByMovieIdAndBranchIdAndTimeFilter(
+            @PathVariable("movieId") Long movieId,
+            @PathVariable("branchId") Long branchId,
+            @NotNull(message = "יש לציין תאריך תחילת טווח") @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime fromDate,
+            @NotNull(message = "יש לציין תאריך סוף טווח")  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime toDate,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ShowtimeDTO> showtimeList = showtimeServiceImpl.getShowtimeByMovieIdAndBranchIdAndTimeFilter(
+                movieId,
+                branchId,
+                fromDate,
+                toDate,
+                pageable
+        );
+        return ResponseEntity.ok(showtimeList.getContent());
+    }
+
     @GetMapping("/movie/{movieId}/branch/{branchId}")
     public ResponseEntity<List<ShowtimeDTO>> getShowtimeByMovieIdAndBranchId(
             @PathVariable("movieId") Long movieId,
             @PathVariable("branchId") Long branchId,
-            @NotNull(message = "יש לציין תאריך תחילת טווח") @Future(message = "תאריך חייב להיות בעתיד.") @RequestParam LocalDateTime fromDate,
-            @NotNull(message = "יש לציין תאריך סוף טווח") @Future(message = "תאריך חייב להיות בעתיד.") @RequestParam LocalDateTime toDate,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ShowtimeDTO> showtimeList = showtimeServiceImpl.getShowtimeByMovieIdAndBranchId(
                 movieId,
                 branchId,
-                fromDate,
-                toDate,
                 pageable
         );
         return ResponseEntity.ok(showtimeList.getContent());

@@ -1,9 +1,11 @@
 package com.cinema.galaxy.services;
 
+import com.cinema.galaxy.DTOs.Branch.BranchDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieCreationDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieUpdateDTO;
 import com.cinema.galaxy.exceptions.UniqueException;
+import com.cinema.galaxy.models.Branch;
 import com.cinema.galaxy.models.Movie;
 import com.cinema.galaxy.models.MovieThumbnail;
 import com.cinema.galaxy.repositories.MovieRepository;
@@ -25,6 +27,12 @@ import java.util.stream.Collectors;
 public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
     private final ModelMapper modelMapper;
+
+    @Override
+    public List<MovieDTO> getMovies(){
+        List<Movie> movies = movieRepository.findAll();
+        return movies.stream().map(movie -> modelMapper.map(movie, MovieDTO.class)).collect(Collectors.toList());
+    }
 
     @Override
     public Page<MovieDTO> getMoviesByGenre(String genre, Pageable pageable){

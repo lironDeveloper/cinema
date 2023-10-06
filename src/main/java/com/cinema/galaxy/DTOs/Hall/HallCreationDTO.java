@@ -1,10 +1,7 @@
 package com.cinema.galaxy.DTOs.Hall;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,8 +17,10 @@ public class HallCreationDTO {
     private String name;
     @NotNull(message = "יש לציין מספר שורות באולם.")
     @Min(value = 1, message = "נדרש לפחות שורה אחת באולם.")
+    @Max(value = 16, message="כמות שורות באולם לא תעלה על 15.")
     private Integer numOfRows;
     @NotNull(message = "יש לציין מספר עמודות באולם.")
     @Min(value = 1, message = "נדרש לפחות עמודה אחת באולם.")
+    @Max(value = 16, message="כמות עמודות באולם לא תעלה על 15.")
     private Integer numOfColumns;
 }

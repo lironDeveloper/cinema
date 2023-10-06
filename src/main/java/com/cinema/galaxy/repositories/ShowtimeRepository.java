@@ -28,4 +28,6 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
             @Param("startTime") LocalDateTime startTime,
             @Param("endTime") LocalDateTime endTime
     );
+
+    Page<Showtime> findByMovieIdAndHall_BranchId(Long movie_id, Long hall_branch_id, Pageable pageable);
 }

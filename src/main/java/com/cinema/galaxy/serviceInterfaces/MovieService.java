@@ -1,5 +1,6 @@
 package com.cinema.galaxy.serviceInterfaces;
 
+import com.cinema.galaxy.DTOs.Branch.BranchDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieCreationDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieUpdateDTO;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface MovieService {
+    public List<MovieDTO> getMovies();
     public Page<MovieDTO> getMoviesByGenre(String genre, Pageable pageable);
     public MovieDTO getMovieById(Long movieId);
     public MovieDTO addMovie(MovieCreationDTO movieCreationDTO);

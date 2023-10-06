@@ -1,5 +1,6 @@
 package com.cinema.galaxy.controllers;
 
+import com.cinema.galaxy.DTOs.Branch.BranchDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieCreationDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieDTO;
 import com.cinema.galaxy.DTOs.Movie.MovieUpdateDTO;
@@ -33,6 +34,11 @@ import java.util.List;
 public class MovieController {
     private final MovieServiceImpl movieServiceImpl;
     private final ReviewServiceImpl reviewServiceImpl;
+
+    @GetMapping
+    public List<MovieDTO> getMovies() {
+        return movieServiceImpl.getMovies();
+    }
 
     @GetMapping("/genre/{genre}")
     public ResponseEntity<List<MovieDTO>> getMoviesByGenre(@PathVariable("genre") @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.") String genre,

@@ -15,13 +15,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ShowtimeService {
-    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchId(
+    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchIdAndTimeFilter(
             Long movieId,
             Long branchId,
             LocalDateTime fromDate,
             LocalDateTime toDate,
             Pageable page
     );
+
+    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchId(
+            Long movieId,
+            Long branchId,
+            Pageable page
+    );
+
     public ShowtimeDTO addShowtime(ShowtimeCreationDTO showtimeCreationDTO);
     public ShowtimeDTO getShowtimeById(Long showtimeId);
     ShowtimeDTO updateShowtime(Long id, ShowtimeUpdateDTO showtimeUpdateDTO);

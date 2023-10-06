@@ -31,8 +31,14 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchId(Long movieId, Long branchId, LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable) {
+    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchIdAndTimeFilter(Long movieId, Long branchId, LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable) {
         Page<Showtime> showtimeList = showtimeRepository.findByMovieIdAndHall_BranchIdAndStartTimeBetween(movieId, branchId, fromDate, toDate, pageable);
+        return showtimeList.map(showtime -> modelMapper.map(showtime, ShowtimeDTO.class));
+    }
+
+    @Override
+    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchId(Long movieId, Long branchId, Pageable pageable) {
+        Page<Showtime> showtimeList = showtimeRepository.findByMovieIdAndHall_BranchId(movieId, branchId, pageable);
         return showtimeList.map(showtime -> modelMapper.map(showtime, ShowtimeDTO.class));
     }
 
