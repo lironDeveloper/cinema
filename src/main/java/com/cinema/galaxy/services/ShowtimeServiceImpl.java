@@ -17,8 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -31,7 +30,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     private final ModelMapper modelMapper;
 
     @Override
-    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchIdAndTimeFilter(Long movieId, Long branchId, LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable) {
+    public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchIdAndTimeFilter(Long movieId, Long branchId, Instant fromDate, Instant toDate, Pageable pageable) {
         Page<Showtime> showtimeList = showtimeRepository.findByMovieIdAndHall_BranchIdAndStartTimeBetween(movieId, branchId, fromDate, toDate, pageable);
         return showtimeList.map(showtime -> modelMapper.map(showtime, ShowtimeDTO.class));
     }
@@ -55,7 +54,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         Showtime showtime = modelMapper.map(showtimeCreationDTO, Showtime.class);
         showtime.setHall(hall);
         showtime.setMovie(movie);
-        showtime.setEndTime(showtime.getStartTime().plusMinutes(movie.getDuration()));
+        showtime.setEndTime(showtime.getStartTime().plusSeconds(movie.getDuration() * 60));
 
         // Check if the hall is not occupied between start time - end time
         if(isHallOccupied(showtime)){
@@ -101,7 +100,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
             }
             modelMapper.map(showtimeUpdateDTO, showtime);
 
-            showtime.setEndTime(showtime.getStartTime().plusMinutes(showtime.getMovie().getDuration()));
+            showtime.setEndTime(showtime.getStartTime().plusSeconds(showtime.getMovie().getDuration() * 60));
 
             // Check if the hall is not occupied between start time - end time
             if(isHallOccupied(showtime)){

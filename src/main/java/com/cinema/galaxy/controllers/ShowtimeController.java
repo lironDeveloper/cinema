@@ -19,7 +19,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -75,8 +75,8 @@ public class ShowtimeController {
     public ResponseEntity<List<ShowtimeDTO>> getShowtimeByMovieIdAndBranchIdAndTimeFilter(
             @PathVariable("movieId") Long movieId,
             @PathVariable("branchId") Long branchId,
-            @NotNull(message = "יש לציין תאריך תחילת טווח") @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime fromDate,
-            @NotNull(message = "יש לציין תאריך סוף טווח")  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime toDate,
+            @NotNull(message = "יש לציין תאריך תחילת טווח") @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Instant fromDate,
+            @NotNull(message = "יש לציין תאריך סוף טווח")  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Instant toDate,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);

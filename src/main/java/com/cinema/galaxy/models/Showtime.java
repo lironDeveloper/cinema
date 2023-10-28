@@ -12,7 +12,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +32,9 @@ public class Showtime {
     private Hall hall;
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
     @Column(name = "start_time", nullable = false)
-    private LocalDateTime startTime;
+    private Instant startTime;
     @Column(name = "end_time", nullable = false)
-    private LocalDateTime endTime; // This column is calculated according the duration of the movie
+    private Instant endTime; // This column is calculated according the duration of the movie
     @Column(name = "created_on")
     @CreationTimestamp
     private Instant createdOn;

@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,7 +13,7 @@ public class MovieDTO {
     private String title;
     private String description;
     private Integer duration;
-    private LocalDateTime releaseDate;
+    private Instant releaseDate;
     private String genre;
     private String director;
     private String language;

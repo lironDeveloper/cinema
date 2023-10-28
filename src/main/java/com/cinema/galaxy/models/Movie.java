@@ -16,7 +16,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class Movie {
     private Integer duration; // In minutes
     @PastOrPresent(message = "תאריך הוצאת סרט חייב להיות בעבר.")
     @Column(name = "release_date", nullable = false)
-    private LocalDateTime releaseDate;
+    private Instant releaseDate;
     @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.")
     @Column(nullable = false)
     private String genre;

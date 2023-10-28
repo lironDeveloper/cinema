@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ public class ShowtimeDTO {
     private Long id;
     private MovieDTO movie;
     private HallDTO hall;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Instant startTime;
+    private Instant endTime;
     private Instant createdOn;
 }

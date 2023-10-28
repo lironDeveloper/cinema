@@ -6,5 +6,6 @@ services:
       - 'MYSQL_PASSWORD=p@ssw!rd'
 #      - 'MYSQL_ROOT_PASSWORD=p@ssw!rd'
       - 'MYSQL_USER=admin'
+      - 'TZ=Asia/Jerusalem'
     ports:
       - '3306'

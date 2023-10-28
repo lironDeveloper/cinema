@@ -25,7 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Page<ReviewDTO> getReviewsByMovieId(Long movieId, Pageable pageable){
-        Page<Review> reviews = reviewRepository.findByMovieId(movieId, pageable);
+        Page<Review> reviews = reviewRepository.findByMovieIdOrderByCreatedOnDesc(movieId, pageable);
         return reviews.map(review -> modelMapper.map(review, ReviewDTO.class));
     }
 

@@ -9,11 +9,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.Instant;
 
 public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
-    Page<Showtime> findByMovieIdAndHall_BranchIdAndStartTimeBetween(Long movie_id, Long hall_branch_id, LocalDateTime fromDate, LocalDateTime toDate, Pageable pageable);
+    Page<Showtime> findByMovieIdAndHall_BranchIdAndStartTimeBetween(Long movie_id, Long hall_branch_id, Instant fromDate, Instant toDate, Pageable pageable);
     @Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END " +
             "FROM Showtime s " +
             "WHERE s.hall.id = :hallId " +
@@ -25,8 +24,8 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Long> {
     boolean existsConflictingShowtime(
             @Param("showtimeId") Long showtimeId,
             @Param("hallId") Long hallId,
-            @Param("startTime") LocalDateTime startTime,
-            @Param("endTime") LocalDateTime endTime
+            @Param("startTime") Instant startTime,
+            @Param("endTime") Instant endTime
     );
 
     Page<Showtime> findByMovieIdAndHall_BranchId(Long movie_id, Long hall_branch_id, Pageable pageable);

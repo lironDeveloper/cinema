@@ -11,15 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.List;
 
 public interface ShowtimeService {
     public Page<ShowtimeDTO> getShowtimeByMovieIdAndBranchIdAndTimeFilter(
             Long movieId,
             Long branchId,
-            LocalDateTime fromDate,
-            LocalDateTime toDate,
+            Instant fromDate,
+            Instant toDate,
             Pageable page
     );
 

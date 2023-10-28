@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -25,7 +25,7 @@ public class MovieUpdateDTO {
     @Range(min = 1, max=300, message = "אורך סרט חייב להיות בין דקה ל5 שעות.")
     private Integer duration;
     @PastOrPresent(message = "תאריך הוצאת סרט חייב להיות בעבר.")
-    private LocalDateTime releaseDate;
+    private Instant releaseDate;
     @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.")
     private String genre;
     @Size(min = 2, max = 100, message = "שם במאי של הסרט חייב להיות באורך של 2-100 תווים.")

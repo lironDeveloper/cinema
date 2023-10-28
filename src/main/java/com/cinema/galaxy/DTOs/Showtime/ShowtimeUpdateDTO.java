@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -16,5 +16,5 @@ public class ShowtimeUpdateDTO {
     private Long movieId;
     private Long hallId;
     @Future(message = "תאריך תחילת הקרנה חייב להיות בעתיד.")
-    private LocalDateTime startTime;
+    private Instant startTime;
 }
