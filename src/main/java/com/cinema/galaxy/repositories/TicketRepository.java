@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findAllByShowtimeId(Long showtimeId);
-    Page<Ticket> findAllByUserId(Long userId, Pageable pageable);
+    Page<Ticket> findAllByUserIdOrderByShowtime_StartTimeDesc(Long userId, Pageable pageable);
     boolean existsByShowtimeIdAndSeatId(Long showtimeId, Long seatId);
 }

@@ -43,7 +43,7 @@ public class MovieController {
     @GetMapping("/genre/{genre}")
     public ResponseEntity<List<MovieDTO>> getMoviesByGenre(@PathVariable("genre") @ValidEnumValue(enumClass = Genre.class, message = "יש לבחור זאנ'ר חוקי.") String genre,
                                                            @RequestParam(defaultValue = "0") int page,
-                                                           @RequestParam(defaultValue = "10") int size){
+                                                           @RequestParam(defaultValue = "50") int size){
         Pageable pageable = PageRequest.of(page, size);
         Page<MovieDTO> movies = movieServiceImpl.getMoviesByGenre(genre, pageable);
         return ResponseEntity.ok(movies.getContent());
@@ -90,7 +90,7 @@ public class MovieController {
     public ResponseEntity<List<ReviewDTO>> getReviewsByMovieId(
             @PathVariable Long movieId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "50") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ReviewDTO> reviews = reviewServiceImpl.getReviewsByMovieId(movieId, pageable);
         return ResponseEntity.ok(reviews.getContent());

@@ -41,7 +41,7 @@ public class TicketController {
     @GetMapping("/my-tickets")
     public ResponseEntity<List<TicketDetailsDTO>> getAllUsersTickets(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "50") int size) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Pageable pageable = PageRequest.of(page, size);
         Page<TicketDetailsDTO> tickets = ticketServiceImpl.getTicketsByUser(email, pageable);

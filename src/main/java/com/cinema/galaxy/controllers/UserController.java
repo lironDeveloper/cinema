@@ -44,7 +44,7 @@ public class UserController {
     public ResponseEntity<List<ReviewDTO>> getReviewsByUserId(
             @PathVariable Long id,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "50") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ReviewDTO> reviews = reviewServiceImpl.getReviewsByUserId(id, pageable);
         return ResponseEntity.ok(reviews.getContent());

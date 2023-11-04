@@ -78,7 +78,7 @@ public class ShowtimeController {
             @NotNull(message = "יש לציין תאריך תחילת טווח") @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Instant fromDate,
             @NotNull(message = "יש לציין תאריך סוף טווח")  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)Instant toDate,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "50") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ShowtimeDTO> showtimeList = showtimeServiceImpl.getShowtimeByMovieIdAndBranchIdAndTimeFilter(
                 movieId,
@@ -95,7 +95,7 @@ public class ShowtimeController {
             @PathVariable("movieId") Long movieId,
             @PathVariable("branchId") Long branchId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "50") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ShowtimeDTO> showtimeList = showtimeServiceImpl.getShowtimeByMovieIdAndBranchId(
                 movieId,

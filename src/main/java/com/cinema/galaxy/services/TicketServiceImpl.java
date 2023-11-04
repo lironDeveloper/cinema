@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,10 @@ public class TicketServiceImpl implements TicketService {
             throw new IllegalArgumentException("מושב זה כבר תפוס בהקרנה זו, אנא נסו מושב אחר.");
         }
 
+        if(showtime.getStartTime().isBefore(Instant.now())){
+            throw new IllegalArgumentException("הקרנה זו כבר שודרה, יש לבחור הקרנה עתידית.");
+        }
+
         // Create a new ticker entity
         Ticket ticket = modelMapper.map(ticketReservationDTO, Ticket.class);
 
@@ -74,7 +79,7 @@ public class TicketServiceImpl implements TicketService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("לא קיים משתמש כזה."));
 
-        Page<Ticket> tickets = ticketRepository.findAllByUserId(user.getId(), page);
+        Page<Ticket> tickets = ticketRepository.findAllByUserIdOrderByShowtime_StartTimeDesc(user.getId(), page);
         return tickets.map(ticket -> modelMapper.map(ticket, TicketDetailsDTO.class));
     }
 
