@@ -35,7 +35,7 @@ public class AuthenticationController {
     public ResponseEntity<String> authenticate(@Valid @RequestBody UserAuthenticationDTO userAuthenticationDTO){
         final UserDTO userDTO = userServiceImpl.getUserByEmail(userAuthenticationDTO.getEmail());
         if(userDTO == null){
-            throw new IllegalArgumentException(".שם משתמש לא קיים"); // TODO: fit the exception type
+            throw new IllegalArgumentException(".שם משתמש לא קיים");
         }
 
         authenticationManager.authenticate(

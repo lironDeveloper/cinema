@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex) {
         List<String> errors = new ArrayList<>();
-        errors.add("סיסמא לא נכונה."); // TODO: improve
+        errors.add("סיסמא לא נכונה.");
         return createErrorResponse(errors, HttpStatus.UNAUTHORIZED);
     }
 

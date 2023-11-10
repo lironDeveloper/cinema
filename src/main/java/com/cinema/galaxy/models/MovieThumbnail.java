@@ -28,6 +28,6 @@ public class MovieThumbnail {
         @UpdateTimestamp
         private Instant lastUpdatedOn;
 
-                @OneToOne(mappedBy = "movieThumbnail", cascade = CascadeType.ALL, orphanRemoval = true)
+        @OneToOne(mappedBy = "movieThumbnail", cascade = CascadeType.ALL, orphanRemoval = true)
         private Movie movie;
 }
